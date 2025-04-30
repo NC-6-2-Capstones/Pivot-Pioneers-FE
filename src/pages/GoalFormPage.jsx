@@ -1,4 +1,3 @@
-// src/pages/GoalFormPage.jsx
 import React, { useState } from 'react';
 
 const GoalFormPage = () => {
