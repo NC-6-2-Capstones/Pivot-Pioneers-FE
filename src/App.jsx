@@ -1,12 +1,13 @@
 import { ChakraProvider, Box } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
     <ChakraProvider>
       <Box>
         <Navbar />
-        {/* Add routing or content here */}
+        <HomePage />
       </Box>
     </ChakraProvider>
   );
