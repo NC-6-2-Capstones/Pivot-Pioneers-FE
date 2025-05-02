@@ -1,5 +1,6 @@
 // src/components/LoginForm.jsx
 import React, { useState } from 'react';
+import { TextField, Button, Box } from '@mui/material';
 
 const LoginForm = ({ onLogin }) => {
     const [email, setEmail] = useState('');
@@ -7,30 +8,29 @@ const LoginForm = ({ onLogin }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!email || !password) return;
         onLogin({ email, password });
-        setEmail('');
-        setPassword('');
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: 300 }}>
+            <TextField
+                label="Email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
                 required
             />
-            <input
+            <TextField
+                label="Password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
                 required
             />
-            <button type="submit">Login</button>
-        </form>
+            <Button type="submit" variant="contained" color="primary">
+                Login
+            </Button>
+        </Box>
     );
 };
 

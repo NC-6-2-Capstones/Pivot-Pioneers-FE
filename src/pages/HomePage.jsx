@@ -1,17 +1,11 @@
-// src/pages/HomePage.jsx
-import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react';
+import React from 'react';
 
 const HomePage = () => {
   return (
-    <Box p={10} textAlign="center">
-      <VStack spacing={6}>
-        <Heading>Welcome to Pivot Pioneers</Heading>
-        <Text fontSize="lg">Empowering justice-impacted individuals to thrive.</Text>
-        <Button colorScheme="teal" size="lg">
-          Get Started
-        </Button>
-      </VStack>
-    </Box>
+    <div>
+      <h2>Welcome to the Golden Roadmap</h2>
+      <p>This is the home page content.</p>
+    </div>
   );
 };
 
