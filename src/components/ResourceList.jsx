@@ -1,4 +1,3 @@
-// src/components/ResourceList.jsx
 import React from 'react';
 
 const ResourceList = ({ resources, loading }) => {
