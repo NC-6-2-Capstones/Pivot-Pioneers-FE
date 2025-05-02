@@ -16,7 +16,7 @@ const GoalForm = ({ onSubmit }) => {
                 type="text"
                 value={goal}
                 onChange={(e) => setGoal(e.target.value)}
-                placeholder="Enter your goal"
+                placeholder="What do you want to achieve?"
                 required
             />
             <button type="submit">Submit</button>
