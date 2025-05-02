@@ -8,6 +8,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import GoalFormPage from './pages/GoalFormPage';
 import HomePage from './pages/HomePage';
+import DashboardPage from './pages/DashboardPage';
+
 // import ResourcePage from './pages/ResourcePage';
 
 const theme = createTheme({
@@ -35,6 +37,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/goals" element={<GoalFormPage />} />
           {/* <Route path="/resources" element={<ResourcePage />} /> */}
         </Routes>
