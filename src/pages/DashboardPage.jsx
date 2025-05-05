@@ -1,11 +1,19 @@
 // src/pages/DashboardPage.jsx
-import { Box, Heading, Text } from '@chakra-ui/react';
+import { Box, Typography } from '@mui/material';
+import QuoteBox from "../components/QuoteBox";
+import RoadmapDisplay from "../components/RoadmapDisplay";
 
 function DashboardPage() {
     return (
       <Box p={4}>
-        <Heading>Dashboard</Heading>
-        <Text mt={2}>User info and roadmap will go here.</Text>
+        <Typography variant="h4" gutterBottom>
+          Dashboard
+        </Typography>
+        <Typography variant="body1" sx={{ mt: 2 }}>
+          User info and roadmap will go here.
+        </Typography>
+        <RoadmapDisplay />
+        <QuoteBox />
       </Box>
     );
   }
