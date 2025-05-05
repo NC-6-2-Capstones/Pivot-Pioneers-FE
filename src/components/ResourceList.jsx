@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, List, ListItem, Spinner, Link, Alert, AlertIcon } from '@chakra-ui/react';
+import { Box, Typography, List, ListItem, CircularProgress, Link, Alert } from '@mui/material';
 import axios from 'axios';
 
 /**
@@ -21,30 +21,29 @@ export default function ResourceList() {
 
   if (loading) {
     return (
-      <Box textAlign="center" py={10}>
-        <Spinner size="xl" />
+      <Box sx={{ textAlign: 'center', py: 10 }}>
+        <CircularProgress size={60} />
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Alert status="error">
-        <AlertIcon />
+      <Alert severity="error">
         Failed to load resources.
       </Alert>
     );
   }
 
   return (
-    <Box p={6} bg="white" borderRadius="lg" boxShadow="sm">
-      <Heading as="h2" size="lg" mb={4}>
+    <Box sx={{ p: 6, bgcolor: 'white', borderRadius: 2, boxShadow: 1 }}>
+      <Typography variant="h4" gutterBottom>
         Resources
-      </Heading>
-      <List spacing={3}>
+      </Typography>
+      <List>
         {resources.map((r) => (
           <ListItem key={r.id}>
-            <Link href={r.url} isExternal color="teal.500">
+            <Link href={r.url} target="_blank" rel="noopener" color="primary">
               {r.title}
             </Link>
           </ListItem>
