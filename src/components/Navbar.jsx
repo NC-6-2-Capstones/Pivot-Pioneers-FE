@@ -1,15 +1,20 @@
-import { Box, Flex, Heading, Spacer, Button } from '@chakra-ui/react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 const Navbar = () => {
   return (
-    <Box bg="blue.600" px={6} py={4} color="white">
-      <Flex align="center">
-        <Heading size="md">Pivot Pioneers</Heading>
-        <Spacer />
-        <Button colorScheme="teal" variant="outline">
-          Login
-        </Button>
-      </Flex>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Pivot Pioneers
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 };
