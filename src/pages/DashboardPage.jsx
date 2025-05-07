@@ -36,7 +36,9 @@ const DashboardPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
     );
   }
 
+
   return (
+
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
         <Typography component="h1" variant="h5" align="center" gutterBottom>
@@ -81,7 +83,7 @@ const DashboardPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
           </Button>
         </Box>
       </Paper>
-    </Container>
+
   );
 };
 

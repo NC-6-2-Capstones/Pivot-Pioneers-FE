@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography, Container, Paper, Box } from '@mui/material';
@@ -14,12 +13,13 @@ const LoginPage = () => {
     // Redirect if already authenticated
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate('/');
+            navigate('/dashboard'); // ✅ Redirect to dashboard instead of home
         }
     }, [isAuthenticated, navigate]);
 
     const handleLogin = async (credentials) => {
         try {
+
             const user = await login(credentials.username, credentials.password);
       
             if (user) {
@@ -30,6 +30,7 @@ const LoginPage = () => {
           } catch (err) {
             console.error('Login failed:', err);
           }
+
     };
 
     return (
@@ -49,7 +50,7 @@ const LoginPage = () => {
 
                     <Box sx={{ mt: 3, textAlign: 'center' }}>
                         <Typography variant="body2">
-                            Don't have an account?{' '}
+                            Don&apos;t have an account?{' '}
                             <Typography
                                 component="a"
                                 variant="body2"
