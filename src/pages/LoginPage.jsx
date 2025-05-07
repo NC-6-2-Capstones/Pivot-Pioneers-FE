@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { Typography, Container, Paper, Box } from '@mui/material';
 import LoginForm from '../components/LoginForm';
 import { useAuth } from '../contexts/AuthContext';
+import { useUser } from '../contexts/UserContext';
 
 const LoginPage = () => {
     const { login, isAuthenticated } = useAuth();
     const navigate = useNavigate();
+    const { setUser } = useNavigate();
 
     // Redirect if already authenticated
     React.useEffect(() => {
@@ -17,9 +19,17 @@ const LoginPage = () => {
     }, [isAuthenticated, navigate]);
 
     const handleLogin = async (credentials) => {
-        // Call the login function from AuthContext
-        await login(credentials.username, credentials.password);
-        // Redirection is handled in the useEffect
+        try {
+            const user = await login(credentials.username, credentials.password);
+      
+            if (user) {
+              setUser(user);
+              localStorage.setItem('user', JSON.stringify(user));
+              navigate('/dashboard');
+            }
+          } catch (err) {
+            console.error('Login failed:', err);
+          }
     };
 
     return (
