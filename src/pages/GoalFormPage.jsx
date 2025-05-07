@@ -13,7 +13,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { goalService } from '../services/apiService';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AssessmentForm from '../components/AssessmentForm';
+// import AssessmentForm from '../components/AssessmentForm';
 // import { sendToGeminiAI } from '../services/geminiService'; 
 
 const GoalFormPage = () => {
