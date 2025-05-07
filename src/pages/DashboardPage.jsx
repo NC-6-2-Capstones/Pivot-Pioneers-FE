@@ -83,7 +83,7 @@ const DashboardPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
           </Button>
         </Box>
       </Paper>
-
+    </Container>  
   );
 };
 
