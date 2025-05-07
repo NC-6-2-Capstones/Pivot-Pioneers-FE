@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import authService from './authService';
 
@@ -43,7 +42,8 @@ export const goalService = {
   getGoal: (id) => api.get(`/goals/${id}/`),
   createGoal: (goalData) => api.post('/goals/', goalData),
   updateGoal: (id, goalData) => api.put(`/goals/${id}/`, goalData),
-  deleteGoal: (id) => api.delete(`/goals/${id}/`)
+  deleteGoal: (id) => api.delete(`/goals/${id}/`),
+  getRoadmap: (id) => api.get(`/goals/${id}/roadmap/`)
 };
 
 // Profile service
