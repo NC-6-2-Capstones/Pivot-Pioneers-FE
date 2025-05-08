@@ -48,14 +48,14 @@ const App = () => {
                                     </ProtectedRoute>
                                 } 
                             />
-                            <Route 
+                            {/* <Route 
                                 path="/userProfile" 
                                 element={
                                     <ProtectedRoute>
                                         <UserProfilePage />
                                     </ProtectedRoute>
                                 } 
-                            />
+                            /> */}
                         </Routes>
                     </Router>
                 </AuthProvider>
