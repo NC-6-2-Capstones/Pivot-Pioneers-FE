@@ -3,26 +3,34 @@ import { useNavigate } from 'react-router-dom';
 import { Typography, Container, Paper, Box } from '@mui/material';
 import LoginForm from '../components/LoginForm';
 import { useAuth } from '../contexts/AuthContext';
+// import { useUser } from '../contexts/UserContext';
 
 const LoginPage = () => {
     const { login, isAuthenticated } = useAuth();
     const navigate = useNavigate();
+    const { setUser } = useNavigate();
 
     // Redirect if already authenticated
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate('/dashboard'); // ✅ Redirect to dashboard instead of home
+            navigate('/userProfile'); // ✅ Redirect to dashboard instead of home
         }
     }, [isAuthenticated, navigate]);
 
     const handleLogin = async (credentials) => {
         try {
-            await login(credentials.username, credentials.password);
-            // no need to navigate here — useEffect will handle it
+
+            const user = await login(credentials.username, credentials.password);
+
+            if (user) {
+                setUser(user);
+                localStorage.setItem('user', JSON.stringify(user));
+                navigate('/dashboard');
+            }
         } catch (err) {
             console.error('Login failed:', err);
-            // optionally show an error message here
         }
+
     };
 
     return (

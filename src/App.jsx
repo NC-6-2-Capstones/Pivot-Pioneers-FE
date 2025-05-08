@@ -9,7 +9,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import GoalFormPage from './pages/GoalFormPage';
 import HomePage from './pages/HomePage';
-import AssessmentPage from './pages/AssessmentPage'; // Add this import
+import DashboardPage from './pages/DashboardPage';
+import { UserProvider } from './contexts/UserContext';
 
 const theme = createTheme({
   palette: {
@@ -28,36 +29,39 @@ const theme = createTheme({
 });
 
 const App = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/goals"
-              element={
-                <ProtectedRoute>
-                  <GoalFormPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/assessment"
-              element={
-                <ProtectedRoute>
-                  <AssessmentPage />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </ThemeProvider>
-  );
+    return (
+        <UserProvider> 
+            <ThemeProvider theme={theme}>
+                <AuthProvider>
+                    <Router>
+                        <Navbar />
+                        <Routes>
+                            <Route path="/dashboard" element={<DashboardPage />} />
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
+                            <Route 
+                                path="/goals" 
+                                element={
+                                    <ProtectedRoute>
+                                        <GoalFormPage />
+                                    </ProtectedRoute>
+                                } 
+                            />
+                            {/* <Route 
+                                path="/userProfile" 
+                                element={
+                                    <ProtectedRoute>
+                                        <UserProfilePage />
+                                    </ProtectedRoute>
+                                } 
+                            /> */}
+                        </Routes>
+                    </Router>
+                </AuthProvider>
+            </ThemeProvider>
+        </UserProvider>
+    );
 };
 
 export default App;

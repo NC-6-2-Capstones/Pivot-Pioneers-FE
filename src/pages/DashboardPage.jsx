@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { assessmentService } from '../services/apiService';
 import {
   Box,
   Typography,
@@ -12,78 +10,18 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem,
-  TextField,
-  CircularProgress,
-  Alert,
-  Divider
+  MenuItem
 } from '@mui/material';
+
 
 const DashboardPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
   const { user } = useUser();
-  const { isAuthenticated } = useAuth();
   const [category, setCategory] = useState('');
-  const [goalText, setGoalText] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [hasProfile, setHasProfile] = useState(false);
   const navigate = useNavigate();
 
-  // Check if user has completed the assessment
-  useEffect(() => {
-    if (isAuthenticated) {
-      setLoading(true);
-      assessmentService.getProfile()
-        .then(() => {
-          setHasProfile(true);
-        })
-        .catch((error) => {
-          if (error.response?.status === 404) {
-            setHasProfile(false);
-          }
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [isAuthenticated]);
-
-  const handleSaveGoal = () => {
-    if (!goalText.trim()) {
-      alert("Please enter your goal");
-      return;
-    }
-    
-    if (!category) {
-      alert("Please select a category");
-      return;
-    }
-    
-    // If user hasn't completed assessment, direct them there
-    if (!hasProfile) {
-      navigate('/assessment', { 
-        state: { 
-          goalData: { 
-            title: goalText, 
-            category 
-          },
-          returnTo: '/goal-form'
-        } 
-      });
-    } else {
-      // If they've already done the assessment, proceed to goal form
-      navigate('/goal-form', { 
-        state: { 
-          goalData: { 
-            title: goalText, 
-            category 
-          } 
-        } 
-      });
-    }
-  };
-
-  const handleStartAssessment = () => {
-    navigate('/assessment');
+  const handleNextClick = () => {
+    console.log('Next button clicked. Selected category:', category);
+    navigate('/goal-form', { state: { category } });
   };
 
   const handleChange = (event) => {
@@ -98,7 +36,9 @@ const DashboardPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
     );
   }
 
+
   return (
+
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
         <Typography component="h1" variant="h5" align="center" gutterBottom>
@@ -115,18 +55,6 @@ const DashboardPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
         </Box>
 
         <Box mt={4}>
-          <TextField
-            fullWidth
-            label="Your Goal"
-            variant="outlined"
-            value={goalText}
-            onChange={(e) => setGoalText(e.target.value)}
-            multiline
-            rows={2}
-            placeholder="Describe your goal here..."
-            sx={{ mb: 3 }}
-          />
-
           <FormControl fullWidth>
             <InputLabel id="category-select-label">Select a Category</InputLabel>
             <Select
@@ -149,39 +77,11 @@ const DashboardPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
             variant="contained"
             color="primary"
             size="large"
-            onClick={handleSaveGoal}
+            onClick={handleNextClick}
           >
-            Save Goal
+            Next
           </Button>
         </Box>
-
-        <Divider sx={{ my: 4 }} />
-
-        {loading ? (
-          <Box display="flex" justifyContent="center" mt={2}>
-            <CircularProgress size={24} />
-          </Box>
-        ) : !hasProfile ? (
-          <Box mt={2}>
-            <Alert severity="info" sx={{ mb: 2 }}>
-              Complete your personalized assessment to get a customized roadmap for your goals!
-            </Alert>
-            <Button
-              variant="outlined"
-              color="primary"
-              fullWidth
-              onClick={handleStartAssessment}
-            >
-              Take Assessment
-            </Button>
-          </Box>
-        ) : (
-          <Box mt={2}>
-            <Alert severity="success" sx={{ mb: 2 }}>
-              You've completed your assessment. Your goals will be personalized based on your profile.
-            </Alert>
-          </Box>
-        )}
       </Paper>
     </Container>  
   );
