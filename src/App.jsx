@@ -48,6 +48,14 @@ const App = () => {
                                     </ProtectedRoute>
                                 } 
                             />
+                            {/* <Route 
+                                path="/userProfile" 
+                                element={
+                                    <ProtectedRoute>
+                                        <UserProfilePage />
+                                    </ProtectedRoute>
+                                } 
+                            /> */}
                         </Routes>
                     </Router>
                 </AuthProvider>

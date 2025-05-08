@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Typography, Container, Paper, Box } from '@mui/material';
 import LoginForm from '../components/LoginForm';
 import { useAuth } from '../contexts/AuthContext';
-import { useUser } from '../contexts/UserContext';
+// import { useUser } from '../contexts/UserContext';
 
 const LoginPage = () => {
     const { login, isAuthenticated } = useAuth();
@@ -13,7 +13,7 @@ const LoginPage = () => {
     // Redirect if already authenticated
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate('/dashboard'); // ✅ Redirect to dashboard instead of home
+            navigate('/userProfile'); // ✅ Redirect to dashboard instead of home
         }
     }, [isAuthenticated, navigate]);
 
@@ -21,15 +21,15 @@ const LoginPage = () => {
         try {
 
             const user = await login(credentials.username, credentials.password);
-      
+
             if (user) {
-              setUser(user);
-              localStorage.setItem('user', JSON.stringify(user));
-              navigate('/dashboard');
+                setUser(user);
+                localStorage.setItem('user', JSON.stringify(user));
+                navigate('/dashboard');
             }
-          } catch (err) {
+        } catch (err) {
             console.error('Login failed:', err);
-          }
+        }
 
     };
 
