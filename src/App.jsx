@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -13,19 +13,19 @@ import DashboardPage from './pages/DashboardPage';
 import { UserProvider } from './contexts/UserContext';
 
 const theme = createTheme({
-    palette: {
-        mode: 'light',
-        primary: { main: '#4caf50' }, // soft green (growth, success)
-        secondary: { main: '#2196f3' }, // calm blue (trust, focus)
-        background: {
-            default: '#f0f4f8',// light gray-blue (clean, fresh)
-            paper: '#ffffff', // white (contrast for cards/forms)
-        },
-        text: {
-            primary: '#1a1a1a', // near-black (legible)
-            secondary: '#5f6368', // soft gray
-        },
+  palette: {
+    mode: 'light',
+    primary: { main: '#4caf50' }, // soft green (growth, success)
+    secondary: { main: '#2196f3' }, // calm blue (trust, focus)
+    background: {
+      default: '#f0f4f8', // light gray-blue (clean, fresh)
+      paper: '#ffffff', // white (contrast for cards/forms)
     },
+    text: {
+      primary: '#1a1a1a', // near-black (legible)
+      secondary: '#5f6368', // soft gray
+    },
+  },
 });
 
 const App = () => {
