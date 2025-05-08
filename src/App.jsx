@@ -10,6 +10,7 @@ import GoalFormPage from './pages/GoalFormPage';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import AssessmentPage from './pages/AssessmentPage';
+import UserProfilePage from './pages/UserProfilePage';
 import { UserProvider } from './contexts/UserContext';
 
 const theme = createTheme({
@@ -56,14 +57,14 @@ const App = () => {
                                     </ProtectedRoute>
                                 } 
                             />
-                            {/* <Route 
+                            <Route 
                                 path="/userProfile" 
                                 element={
                                     <ProtectedRoute>
                                         <UserProfilePage />
                                     </ProtectedRoute>
                                 } 
-                            /> */}
+                            />
                         </Routes>
                     </Router>
                 </AuthProvider>

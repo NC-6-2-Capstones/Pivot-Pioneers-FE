@@ -138,20 +138,45 @@ const AssessmentPage = () => {
         answer: answers[questionId]
       }));
       
-      await assessmentService.submitAssessment(formattedAnswers);
+      // Filter out any empty answers to avoid backend errors
+      const validAnswers = formattedAnswers.filter(a => a.answer);
+      
+      console.log('Submitting assessment answers:', validAnswers);
+      
+      const response = await assessmentService.submitAssessment(validAnswers);
+      console.log('Assessment submission response:', response);
+      
       setSuccess(true);
       
- // Redirect after a delay, either to the goal form with data or to home
+      // Redirect after a delay
       setTimeout(() => {
         if (goalData && returnTo) {
           navigate(returnTo, { state: { goalData } });
         } else {
-          navigate('/');
+          // Redirect to the profile page instead of home
+          navigate('/profile', { state: { activeTab: 1 } }); // activeTab: 1 is the Assessment Results tab
         }
       }, 2000);
     } catch (err) {
       console.error('Error submitting assessment:', err);
-      setError('Failed to submit assessment. Please try again.');
+      
+      // More detailed error reporting
+      if (err.response) {
+        console.error('Error response:', err.response.data);
+        if (err.response.data.detail) {
+          setError(err.response.data.detail);
+        } else if (err.response.data.errors) {
+          setError(`Failed to submit assessment: ${err.response.data.errors.join(', ')}`);
+        } else {
+          setError('Failed to submit assessment. Server returned an error.');
+        }
+      } else if (err.request) {
+        // Request was made but no response received
+        setError('Failed to submit assessment. No response from server.');
+      } else {
+        // Something else happened
+        setError(`Failed to submit assessment: ${err.message}`);
+      }
     } finally {
       setSubmitting(false);
     }

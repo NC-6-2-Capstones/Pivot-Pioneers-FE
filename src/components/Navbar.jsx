@@ -84,7 +84,7 @@ const Navbar = () => {
             >
               <MenuItem onClick={() => {
                 handleClose();
-                navigate('/profile');
+                navigate('/userProfile');
               }}>Profile</MenuItem>
               <MenuItem onClick={() => {
                 handleClose();
