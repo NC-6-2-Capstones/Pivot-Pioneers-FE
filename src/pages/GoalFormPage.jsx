@@ -7,28 +7,41 @@ import {
     Typography,
     TextField,
     Button,
-    Divider
+    Divider,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
 } from '@mui/material';
 import { useAuth } from '../contexts/AuthContext';
 import { goalService } from '../services/apiService';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useUser } from '../contexts/UserContext';
 // import AssessmentForm from '../components/AssessmentForm';
 // import { sendToGeminiAI } from '../services/geminiService'; 
 
-const GoalFormPage = () => {
-    const { isAuthenticated, user } = useAuth(); // assumes user object contains `username` or `firstName`
+const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
+    const { isAuthenticated } = useAuth(); // assumes user object contains `username` or `firstName`
+    const { user } = useUser();
     const navigate = useNavigate();
+
 
     const [goal, setGoal] = useState('');
     const [assessment, setAssessment] = useState({});
     const [aiResponse, setAIResponse] = useState('');
+    const [category, setCategory] = useState('');
 
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/login');
         }
     }, [isAuthenticated, navigate]);
+
+    const handleNextClick = () => {
+        console.log('Next button clicked. Selected category:', category);
+        navigate('/goal-form', { state: { category } });
+    };
 
     const handleSubmit = async () => {
         try {
@@ -52,6 +65,18 @@ const GoalFormPage = () => {
         });
     };
 
+    const handleChange = (event) => {
+        setCategory(event.target.value);
+    };
+
+    if (!user) {
+        return (
+          <Container maxWidth="sm" sx={{ py: 4 }}>
+            <Typography variant="h6">Loading your Goals...</Typography>
+          </Container>
+        );
+      }
+
     return (
         <Container maxWidth="md">
             <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -63,6 +88,15 @@ const GoalFormPage = () => {
                     <Typography variant="body1" align="center" sx={{ mb: 4 }}>
                         Let's define your path and get personalized support from our AI assistant.
                     </Typography>
+
+                    <Box mt={4}>
+                        <Typography variant="h6" color="textSecondary" gutterBottom>
+                        Golden Question
+                        </Typography>
+                        <Typography variant="body1">
+                        {goldenQuestion}
+                        </Typography>
+                    </Box>
 
                     {/* Goal Section */}
                     <Typography variant="h6" gutterBottom>
@@ -77,6 +111,24 @@ const GoalFormPage = () => {
                         onChange={(e) => setGoal(e.target.value)}
                         sx={{ mb: 2 }}
                     />
+
+                    <Box mt={4}>
+                    <FormControl fullWidth>
+                        <InputLabel id="category-select-label">Select a Category</InputLabel>
+                        <Select
+                        labelId="category-select-label"
+                        value={category}
+                        label="Select a Category"
+                        onChange={handleChange}
+                        >
+                        <MenuItem value="career">Career</MenuItem>
+                        <MenuItem value="education">Education</MenuItem>
+                        <MenuItem value="personal">Personal</MenuItem>
+                        <MenuItem value="financial">Financial</MenuItem>
+                        <MenuItem value="health">Health</MenuItem>
+                        </Select>
+                    </FormControl>
+                    </Box>
 
                     <Box textAlign="center">
                         <Button
@@ -99,32 +151,7 @@ const GoalFormPage = () => {
                         >
                             <Typography variant="h6">Start Assessment</Typography>
                         </AccordionSummary>
-                        <AccordionDetails>
-                            <TextField
-                                fullWidth
-                                name="q1"
-                                label="What motivates you right now?"
-                                value={assessment.q1}
-                                onChange={handleAssessmentChange}
-                                sx={{ mb: 2 }}
-                            />
-                            <TextField
-                                fullWidth
-                                name="q2"
-                                label="What is your biggest barrier?"
-                                value={assessment.q2}
-                                onChange={handleAssessmentChange}
-                                sx={{ mb: 2 }}
-                            />
-                            <TextField
-                                fullWidth
-                                name="q3"
-                                label="What would success look like in 3 months?"
-                                value={assessment.q3}
-                                onChange={handleAssessmentChange}
-                                sx={{ mb: 2 }}
-                            />
-                        </AccordionDetails>
+                        
                     </Accordion>
 
 
@@ -147,6 +174,17 @@ const GoalFormPage = () => {
                             </Typography>
                         </Box>
                     )}
+
+                    <Box mt={6} display="flex" justifyContent="flex-end">
+                        <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        onClick={handleNextClick}
+                        >
+                        Next
+                        </Button>
+                    </Box>
                 </Paper>
             </Box>
         </Container>
