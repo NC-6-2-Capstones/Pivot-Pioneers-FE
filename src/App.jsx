@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -10,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import GoalFormPage from './pages/GoalFormPage';
 import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
+import AssessmentPage from './pages/AssessmentPage';
 import { UserProvider } from './contexts/UserContext';
 
 const theme = createTheme({
@@ -45,6 +45,14 @@ const App = () => {
                                 element={
                                     <ProtectedRoute>
                                         <GoalFormPage />
+                                    </ProtectedRoute>
+                                } 
+                            />
+                            <Route 
+                                path="/assessment" 
+                                element={
+                                    <ProtectedRoute>
+                                        <AssessmentPage />
                                     </ProtectedRoute>
                                 } 
                             />
