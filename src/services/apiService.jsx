@@ -52,5 +52,11 @@ export const profileService = {
   updateProfile: (profileData) => api.put('/profiles/my-profile/', profileData),
   createProfile: (profileData) => api.post('/profiles/', profileData)
 };
+// Assessment service
+export const assessmentService = {
+  getQuestions: () => api.get('/assessments/questions/'),
+  submitAssessment: (answers) => api.post('/assessments/submit/', { answers }),
+  getProfile: () => api.get('/assessments/profile/')
+};
 
 export default api;

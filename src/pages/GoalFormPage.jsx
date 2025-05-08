@@ -4,10 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import GoalForm from '../components/GoalForm';
 import { goalService } from '../services/apiService';
 import { useAuth } from '../contexts/AuthContext';
+import { useLocation } from 'react-router-dom';
+
 
 const GoalFormPage = () => {
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const initialGoalData = location.state?.goalData;
+    const [goalTitle, setGoalTitle] = useState(initialGoalData?.title || '');
+    const [goalCategory, setGoalCategory] = useState(initialGoalData?.category || '');
     
     // Redirect if not authenticated
     React.useEffect(() => {

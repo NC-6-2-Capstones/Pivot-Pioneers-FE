@@ -1,4 +1,4 @@
-
+// src/components/Navbar.jsx - Add a menu item for assessment
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -44,15 +44,22 @@ const Navbar = () => {
         
         {isAuthenticated ? (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Button 
-              color="inherit" 
-              component={Link} 
+            <Button
+              color="inherit"
+              component={Link}
               to="/goals"
               sx={{ mr: 2 }}
             >
               My Goals
             </Button>
-            
+            <Button
+              color="inherit"
+              component={Link}
+              to="/assessment"
+              sx={{ mr: 2 }}
+            >
+              Take Assessment
+            </Button>
             <IconButton
               size="large"
               onClick={handleMenu}
@@ -79,6 +86,10 @@ const Navbar = () => {
                 handleClose();
                 navigate('/profile');
               }}>Profile</MenuItem>
+              <MenuItem onClick={() => {
+                handleClose();
+                navigate('/assessment');
+              }}>Take Assessment</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Box>
