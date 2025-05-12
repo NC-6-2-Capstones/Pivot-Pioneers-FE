@@ -12,6 +12,7 @@ import DashboardPage from './pages/DashboardPage';
 import AssessmentPage from './pages/AssessmentPage';
 import UserProfilePage from './pages/UserProfilePage';
 import { UserProvider } from './contexts/UserContext';
+import RoadmapPage from './pages/RoadmapPage';
 
 const theme = createTheme({
   palette: {
@@ -62,6 +63,14 @@ const App = () => {
                                 element={
                                     <ProtectedRoute>
                                         <UserProfilePage />
+                                    </ProtectedRoute>
+                                } 
+                            />
+                            <Route 
+                                path="/roadmap" 
+                                element={
+                                    <ProtectedRoute>
+                                        <RoadmapPage />
                                     </ProtectedRoute>
                                 } 
                             />
