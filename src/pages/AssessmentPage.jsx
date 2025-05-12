@@ -153,8 +153,8 @@ const AssessmentPage = () => {
         if (goalData && returnTo) {
           navigate(returnTo, { state: { goalData } });
         } else {
-          // Redirect to the profile page instead of home
-          navigate('/profile', { state: { activeTab: 1 } }); // activeTab: 1 is the Assessment Results tab
+          // Redirect to the roadmap page instead of profile
+          navigate('/roadmap', { state: { fromAssessment: true } });
         }
       }, 2000);
     } catch (err) {
