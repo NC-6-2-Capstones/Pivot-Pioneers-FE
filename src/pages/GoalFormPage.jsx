@@ -118,11 +118,11 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
 
     if (!user) {
         return (
-          <Container maxWidth="sm" sx={{ py: 4 }}>
-            <Typography variant="h6">Loading your Goals...</Typography>
-          </Container>
+            <Container maxWidth="sm" sx={{ py: 4 }}>
+                <Typography variant="h6">Loading your Goals...</Typography>
+            </Container>
         );
-      }
+    }
 
     return (
         <Container maxWidth="md">
@@ -138,10 +138,10 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
 
                     <Box mt={4}>
                         <Typography variant="h6" color="textSecondary" gutterBottom>
-                        Golden Question
+                            Golden Question
                         </Typography>
                         <Typography variant="body1">
-                        {goldenQuestion}
+                            {goldenQuestion}
                         </Typography>
                     </Box>
 
@@ -160,21 +160,21 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                     />
 
                     <Box mt={4}>
-                    <FormControl fullWidth>
-                        <InputLabel id="category-select-label">Select a Category</InputLabel>
-                        <Select
-                        labelId="category-select-label"
-                        value={category}
-                        label="Select a Category"
-                        onChange={handleChange}
-                        >
-                        <MenuItem value="career">Career</MenuItem>
-                        <MenuItem value="education">Education</MenuItem>
-                        <MenuItem value="personal">Personal</MenuItem>
-                        <MenuItem value="financial">Financial</MenuItem>
-                        <MenuItem value="health">Health</MenuItem>
-                        </Select>
-                    </FormControl>
+                        <FormControl fullWidth>
+                            <InputLabel id="category-select-label">Select a Category</InputLabel>
+                            <Select
+                                labelId="category-select-label"
+                                value={category}
+                                label="Select a Category"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value="career">Career</MenuItem>
+                                <MenuItem value="education">Education</MenuItem>
+                                <MenuItem value="personal">Personal</MenuItem>
+                                <MenuItem value="financial">Financial</MenuItem>
+                                <MenuItem value="health">Health</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Box>
 
                     <Box textAlign="center">

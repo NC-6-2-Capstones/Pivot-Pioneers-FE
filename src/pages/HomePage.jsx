@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, Container, Typography, Button, Grid, Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
+
 
 const HomePage = () => {
   return (
@@ -36,7 +38,13 @@ const HomePage = () => {
           <Typography variant="h6" paragraph>
             A path to transformation, empowerment, and new beginnings for justice-impacted individuals ready to reclaim their future.
           </Typography>
-          <Button variant="contained" size="large" sx={{ mt: 3 }}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ mt: 3 }}
+            component={Link}
+            to="/register"
+          >
             Start Your Journey
           </Button>
         </Container>
@@ -112,7 +120,13 @@ const HomePage = () => {
           <Typography variant="body1" color="text.secondary" paragraph>
             Get started today by sharing your goal and letting us build your personalized Golden Roadmap.
           </Typography>
-          <Button variant="contained" size="large">Start Now</Button>
+          <Button
+            variant="contained"
+            size="large"
+            component={Link}
+            to="/register"
+          >
+            Start Now</Button>
         </Container>
       </Box>
 
