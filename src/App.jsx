@@ -13,6 +13,7 @@ import AssessmentPage from './pages/AssessmentPage';
 import UserProfilePage from './pages/UserProfilePage';
 import { UserProvider } from './contexts/UserContext';
 import RoadmapPage from './pages/RoadmapPage';
+import GeminiAIPage from './pages/GeminiAIPage';
 
 const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ const App = () => {
                     <Router>
                         <Navbar />
                         <Routes>
+                            <Route path="/ai" element={<GeminiAIPage />} />     
                             <Route path="/dashboard" element={<DashboardPage />} />
                             <Route path="/" element={<HomePage />} />
                             <Route path="/login" element={<LoginPage />} />
