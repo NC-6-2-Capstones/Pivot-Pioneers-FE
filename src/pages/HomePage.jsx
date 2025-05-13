@@ -65,7 +65,7 @@ const HomePage = () => {
       </Box>
 
       {/* Services Section */}
-      <Box sx={{ bgcolor: '#a8ada8', py: 10 }}>
+      <Box sx={{ bgcolor: '#D9CAB3', py: 10 }}>
         <Container maxWidth="lg">
           <Typography variant="h4" align="center" gutterBottom>Our Services</Typography>
           <Grid container spacing={3} justifyContent={"center"}>
@@ -115,19 +115,20 @@ const HomePage = () => {
       </Box>
 
       {/* Call to Action */}
-      <Box sx={{ bgcolor: '#D9CAB3', py: 8, textAlign: 'center' }}>
+      <Box sx={{ bgcolor: 'primary.main', py: 8, textAlign: 'center' }}>
         <Container maxWidth="md">
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom color="white">
             Ready to define your path?
           </Typography>
-          <Typography variant="body1" color="text.secondary" paragraph>
+          <Typography variant="body1" color="text.secondary" color="white" paragraph>
             Get started today by sharing your goal and letting us build your personalized Golden Roadmap.
           </Typography>
           <Button
-            variant="contained"
+            variant="outlined"
             size="large"
             component={Link}
             to={isAuthenticated ? "/goals" : "/register"}
+            sx={{ borderColor: 'white', color: 'white' }}
           >
             Start Now</Button>
         </Container>
