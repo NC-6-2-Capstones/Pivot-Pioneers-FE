@@ -1,9 +1,12 @@
 import React from 'react';
 import { Box, Container, Typography, Button, Grid, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+
 
 
 const HomePage = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <div>
 
@@ -43,7 +46,7 @@ const HomePage = () => {
             size="large"
             sx={{ mt: 3 }}
             component={Link}
-            to="/register"
+            to={isAuthenticated ? "/goals" : "/register"}
           >
             Start Your Journey
           </Button>
@@ -124,7 +127,7 @@ const HomePage = () => {
             variant="contained"
             size="large"
             component={Link}
-            to="/register"
+            to={isAuthenticated ? "/goals" : "/register"}
           >
             Start Now</Button>
         </Container>
