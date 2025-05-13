@@ -50,16 +50,17 @@ const Navbar = () => {
               to="/goals"
               sx={{ mr: 2 }}
             >
-              My Goals
+              Golden❓
             </Button>
             <Button
               color="inherit"
               component={Link}
-              to="/assessment"
+              to="/roadmap"
               sx={{ mr: 2 }}
             >
-              Take Assessment
+              Roadmap
             </Button>
+            
             <IconButton
               size="large"
               onClick={handleMenu}

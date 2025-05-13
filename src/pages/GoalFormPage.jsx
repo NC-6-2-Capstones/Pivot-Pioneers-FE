@@ -43,18 +43,65 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
         navigate('/goal-form', { state: { category } });
     };
 
+    // const handleSubmit = async () => {
+    //     try {
+    //         const fullPayload = {
+    //             goal,
+    //             assessment,
+    //         };
+    //         const aiResult = await sendToGeminiAI(fullPayload);
+    //         setAIResponse(aiResult); 
+    //         await goalService.createGoal({ goal }); // Save just the goal
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         alert('Something went wrong while submitting.');
+    //     }
+    // };
+
     const handleSubmit = async () => {
+        // Validate inputs
+        if (!goal.trim()) {
+            alert('Please describe your goal');
+            return;
+        }
+        
+        if (!category) {
+            alert('Please select a category');
+            return;
+        }
+    
         try {
-            const fullPayload = {
-                goal,
-                assessment,
-            };
-            const aiResult = await sendToGeminiAI(fullPayload);
-            setAIResponse(aiResult); 
-            await goalService.createGoal({ goal }); // Save just the goal
+            // Create title from first line or first few words
+            const title = goal.split('\n')[0] || goal.substring(0, 50);
+            
+            console.log('Submitting goal with data:', { 
+                title: title,
+                description: goal,
+                category: category
+            });
+            
+            // Save the goal with proper structure matching the backend model
+            const response = await goalService.createGoal({ 
+                title: title,
+                description: goal,
+                category: category
+            });
+            
+            console.log('Goal saved successfully:', response);
+
+            alert('Goal created successfully!');
+        
+            // Navigate to the user profile page and select the goals tab
+            navigate('/userProfile', { 
+                state: { 
+                    activeTab: 2, // Goals tab
+                    newGoal: true
+                }
+            });
+            
         } catch (error) {
-            console.error('Error:', error);
-            alert('Something went wrong while submitting.');
+            console.error('Error submitting goal:', error);
+            alert('Something went wrong while submitting your goal. Please try again.');
         }
     };
 
@@ -140,30 +187,9 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                         </Button>
                     </Box>
 
-                    {/* Assessment Section */}
-                    <Divider sx={{ my: 4 }} />
-                    {/* Assessment Section (Collapsible) */}
-                    <Accordion sx={{ mt: 3 }}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="assessment-content"
-                            id="assessment-header"
-                        >
-                            <Typography variant="h6">Start Assessment</Typography>
-                        </AccordionSummary>
-                        
-                    </Accordion>
 
 
-                    <Box textAlign="center">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSubmit}
-                        >
-                            Submit Assessment
-                        </Button>
-                    </Box>
+                    
 
                     {/* AI Response */}
                     {aiResponse && (
@@ -175,16 +201,7 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                         </Box>
                     )}
 
-                    <Box mt={6} display="flex" justifyContent="flex-end">
-                        <Button
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        onClick={handleNextClick}
-                        >
-                        Next
-                        </Button>
-                    </Box>
+                    
                 </Paper>
             </Box>
         </Container>

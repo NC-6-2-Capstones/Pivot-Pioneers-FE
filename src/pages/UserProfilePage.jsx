@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Container,
   Paper,
@@ -88,8 +88,14 @@ const profileLabels = {
 const UserProfilePage = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   
-  const [activeTab, setActiveTab] = useState(0);
+  // Get state passed from other components
+  const newGoal = location.state?.newGoal;
+  const initialTab = location.state?.activeTab || 0;
+  
+  // Update activeTab state to use initialTab from location state
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [profile, setProfile] = useState(null);
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -131,6 +137,22 @@ const UserProfilePage = () => {
     fetchUserData();
   }, [isAuthenticated, navigate]);
 
+  // Re-fetch goals when navigating from goal creation
+  useEffect(() => {
+    if (newGoal) {
+      const fetchGoals = async () => {
+        try {
+          const goalsResponse = await goalService.getGoals();
+          setGoals(goalsResponse.data);
+        } catch (err) {
+          console.error('Error fetching goals:', err);
+        }
+      };
+      
+      fetchGoals();
+    }
+  }, [newGoal]);
+
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
@@ -150,6 +172,12 @@ const UserProfilePage = () => {
   return (
     <Container maxWidth="lg" sx={{ my: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
+        {newGoal && (
+          <Alert severity="success" sx={{ mb: 3 }}>
+            Goal created successfully! You can view and track it in your goals list.
+          </Alert>
+        )}
+        
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Avatar 
             sx={{ 
