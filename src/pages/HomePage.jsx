@@ -14,7 +14,7 @@ const HomePage = () => {
       <Box
         sx={{
           py: 12,
-          backgroundImage: 'url(/public/images/roadmap-sunset.jpg)', 
+          backgroundImage: 'url(/public/images/setting_sun.jpg)', 
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
