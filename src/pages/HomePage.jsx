@@ -81,14 +81,13 @@ const HomePage = () => {
             ].map((item, i) => (
               <Grid item xs={12} md={4} key={i}>
                 <Paper
-                  elevation={3}
+                  elevation={0}
                   sx={{
                     p: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyCOntent: 'center',
-                    height: '128px',
-                    width: '250px',
+                    width: '333px',
                     textAlign: 'center'
                   }}>
                   <Box sx={{ mb: 2 }}>
