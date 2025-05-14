@@ -87,9 +87,9 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                 category: category
             });
             
-            console.log('Goal saved successfully:', response);
+            // console.log('Goal saved successfully:', response);
 
-            alert('Goal created successfully!');
+            // alert('Goal created successfully!');
         
             // Navigate to the user profile page and select the goals tab
             navigate('/userProfile', { 
@@ -173,6 +173,7 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                                 <MenuItem value="personal">Personal</MenuItem>
                                 <MenuItem value="financial">Financial</MenuItem>
                                 <MenuItem value="health">Health</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>

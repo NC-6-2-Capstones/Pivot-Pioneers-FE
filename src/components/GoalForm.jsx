@@ -46,7 +46,7 @@ const GoalForm = ({ onSubmit }) => {
                 onChange={(e) => setCategory(e.target.value)}
                 required
             >
-                {['Career', 'Education', 'Personal', 'Financial', 'Health'].map((option) => (
+                {['Career', 'Education', 'Personal', 'Financial', 'Health', 'Other'].map((option) => (
                     <MenuItem key={option} value={option}>{option}</MenuItem>
                 ))}
             </TextField>

@@ -409,9 +409,9 @@ const UserProfilePage = () => {
                                                         <Button
                                                             size="small"
                                                             variant="outlined"
-                                                            onClick={() => navigate(`/goals/${goal.id}`)}
+                                                            onClick={() => navigate(`/goals/${goal.id}`)} //roadmap and roadmap.id
                                                         >
-                                                            View Details
+                                                            Goal Roadmap
                                                         </Button>
                                                     </CardContent>
                                                 </Card>
