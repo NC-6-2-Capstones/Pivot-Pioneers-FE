@@ -83,7 +83,6 @@ const profileLabels = {
     }
 };
 
-// Simplified list for brevity - you can expand this with all profile attributes
 
 const UserProfilePage = () => {
   const { user, isAuthenticated } = useAuth();
@@ -159,6 +158,23 @@ const UserProfilePage = () => {
 
     const handleTakeAssessment = () => {
         navigate('/assessment');
+    };
+
+    const handleDeleteGoal = async (goalId) => {
+        if (window.confirm('Are you sure you want to delete this goal? This action cannot be undone.')) {
+        try {
+            await goalService.deleteGoal(goalId);
+            
+            // Remove the deleted goal from the state
+            setGoals(goals.filter(goal => goal.id !== goalId));
+            
+            // Show success message (you could use a snackbar or other notification)
+            alert('Goal deleted successfully');
+        } catch (error) {
+            console.error('Error deleting goal:', error);
+            alert('Failed to delete goal. Please try again.');
+        }
+        }
     };
 
     if (loading) {
@@ -393,26 +409,38 @@ const UserProfilePage = () => {
                                             <Grid item xs={12} key={goal.id}>
                                                 <Card variant="outlined">
                                                     <CardContent>
-                                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                                            <Box>
+                                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2}}>
+                                                            <Box >
                                                                 <Typography variant="h6">{goal.title}</Typography>
-                                                                <Typography variant="body2" color="textSecondary" paragraph>
-                                                                    {goal.description}
-                                                                </Typography>
+                                                                {/* <Typography variant="body2" color="textSecondary" paragraph>
+                                                                    {goal.description} */}
+                                                                {/* </Typography> */}
                                                             </Box>
                                                             <Chip
                                                                 label={goal.category}
                                                                 color="primary"
                                                                 size="small"
+                                                                sx={{ml:2}}
                                                             />
                                                         </Box>
-                                                        <Button
-                                                            size="small"
-                                                            variant="outlined"
-                                                            onClick={() => navigate(`/goals/${goal.id}`)} //roadmap and roadmap.id
-                                                        >
-                                                            Goal Roadmap
-                                                        </Button>
+                                                        <Box sx={{ display: 'flex', gap: 1 , mt:2,  }}>
+                                                            <Button
+                                                                size="small"
+                                                                variant="outlined"
+                                                                onClick={() => navigate(`/roadmap/${goal.id}`)}
+                                                            >
+                                                                Goal Roadmap
+                                                            </Button>
+                                                            <Button 
+                                                                size="small" 
+                                                                variant="outlined"
+                                                                color="error"
+                                                                sx={{ml:2}}
+                                                                onClick={() => handleDeleteGoal(goal.id)}
+                                                            >
+                                                                Delete
+                                                            </Button>
+                                                        </Box>
                                                     </CardContent>
                                                 </Card>
                                             </Grid>
@@ -443,6 +471,23 @@ const UserProfilePage = () => {
                                                                         color="success"
                                                                         size="small"
                                                                     />
+                                                                </Box>
+                                                                <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+                                                                    <Button
+                                                                        size="small"
+                                                                        variant="outlined"
+                                                                        onClick={() => navigate(`/roadmap/${goal.id}`)}
+                                                                    >
+                                                                        Goal Roadmap
+                                                                    </Button>
+                                                                    <Button 
+                                                                        size="small" 
+                                                                        variant="outlined"
+                                                                        color="error"
+                                                                        onClick={() => handleDeleteGoal(goal.id)}
+                                                                    >
+                                                                        Delete
+                                                                    </Button>
                                                                 </Box>
                                                             </CardContent>
                                                         </Card>
