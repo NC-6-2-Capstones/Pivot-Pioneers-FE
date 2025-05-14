@@ -2,19 +2,24 @@ import React from 'react';
 import { Box, Container, Typography, Button, Grid, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import TrackChangesOutlinedIcon from '@mui/icons-material/TrackChangesOutlined';
+import AltRouteOutlinedIcon from '@mui/icons-material/AltRouteOutlined';
+import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+
 
 
 
 const HomePage = () => {
   const { isAuthenticated } = useAuth();
   return (
-    <div>
+    // <div>
+    <Box sx={{ p: 0, m: 0 }}>
 
       {/* Hero Section with Background Image */}
       <Box
         sx={{
           py: 12,
-          backgroundImage: 'url(/public/images/setting_sun.jpg)', 
+          backgroundImage: 'url(/public/images/setting_sun.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -34,7 +39,7 @@ const HomePage = () => {
           },
         }}
       >
-        <Container maxWidth="md">
+        <Container maxWidth="false" disableGutters>
           <Typography variant="h2" gutterBottom>
             Welcome to the Golden Roadmap
           </Typography>
@@ -70,9 +75,9 @@ const HomePage = () => {
           <Typography variant="h4" align="center" gutterBottom>Our Services</Typography>
           <Grid container spacing={3} justifyContent={"center"}>
             {[
-              { title: 'Goal Setting', desc: 'Define what success means to you and set your vision in motion.' },
-              { title: 'Custom Roadmaps', desc: 'Personalized steps at 3, 6, 9 months to help you stay on track.' },
-              { title: 'Resources Hub', desc: 'Access videos, articles, and tools tailored to your journey.' }
+              { title: 'Goal Setting', desc: 'Define what success means to you and set your vision in motion.', icon: <TrackChangesOutlinedIcon fontSize="large" /> },
+              { title: 'Custom Roadmaps', desc: 'Personalized steps at 3, 6, 9 months to help you stay on track.', icon: <AltRouteOutlinedIcon fontSize="large" /> },
+              { title: 'Resources Hub', desc: 'Access videos, articles, and tools tailored to your journey.', icon: <MenuBookOutlinedIcon fontSize="large" /> }
             ].map((item, i) => (
               <Grid item xs={12} md={4} key={i}>
                 <Paper
@@ -86,6 +91,9 @@ const HomePage = () => {
                     width: '250px',
                     textAlign: 'center'
                   }}>
+                  <Box sx={{ mb: 2 }}>
+                    {item.icon}
+                  </Box>
                   <Typography variant="h6">{item.title}</Typography>
                   <Typography color="text.secondary">{item.desc}</Typography>
                 </Paper>
@@ -139,7 +147,8 @@ const HomePage = () => {
         <Typography variant="body2">© {new Date().getFullYear()} Golden Roadmap. All rights reserved.</Typography>
       </Box>
 
-    </div>
+      {/* </div> */}
+      </Box>
   );
 };
 
