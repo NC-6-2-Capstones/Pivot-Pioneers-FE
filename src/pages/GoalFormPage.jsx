@@ -90,10 +90,12 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                 milestone_12_months: milestones['12 months'] || '',
                 full_plan: fullPlan || ''
             });
+ 
             setLoadingAI(false);
             alert('Goal created successfully!');
             navigate('/userProfile', {
                 state: {
+
                     activeTab: 2, // Goals tab
                     newGoal: true
                 }
@@ -173,6 +175,7 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                                 <MenuItem value="personal">Personal</MenuItem>
                                 <MenuItem value="financial">Financial</MenuItem>
                                 <MenuItem value="health">Health</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>

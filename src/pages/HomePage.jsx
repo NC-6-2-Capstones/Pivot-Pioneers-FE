@@ -2,19 +2,24 @@ import React from 'react';
 import { Box, Container, Typography, Button, Grid, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import TrackChangesOutlinedIcon from '@mui/icons-material/TrackChangesOutlined';
+import AltRouteOutlinedIcon from '@mui/icons-material/AltRouteOutlined';
+import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
+
 
 
 
 const HomePage = () => {
   const { isAuthenticated } = useAuth();
   return (
-    <div>
+    // <div>
+    <Box sx={{ p: 0, m: 0 }}>
 
       {/* Hero Section with Background Image */}
       <Box
         sx={{
           py: 12,
-          backgroundImage: 'url(/public/images/roadmap-sunset.jpg)', 
+          backgroundImage: 'url(/public/images/setting_sun.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -34,7 +39,7 @@ const HomePage = () => {
           },
         }}
       >
-        <Container maxWidth="md">
+        <Container maxWidth="false" disableGutters>
           <Typography variant="h2" gutterBottom>
             Welcome to the Golden Roadmap
           </Typography>
@@ -65,27 +70,29 @@ const HomePage = () => {
       </Box>
 
       {/* Services Section */}
-      <Box sx={{ bgcolor: '#a8ada8', py: 10 }}>
+      <Box sx={{ bgcolor: '#D9CAB3', py: 10 }}>
         <Container maxWidth="lg">
           <Typography variant="h4" align="center" gutterBottom>Our Services</Typography>
           <Grid container spacing={3} justifyContent={"center"}>
             {[
-              { title: 'Goal Setting', desc: 'Define what success means to you and set your vision in motion.' },
-              { title: 'Custom Roadmaps', desc: 'Personalized steps at 3, 6, 9 months to help you stay on track.' },
-              { title: 'Resources Hub', desc: 'Access videos, articles, and tools tailored to your journey.' }
+              { title: 'Goal Setting', desc: 'Define what success means to you and set your vision in motion.', icon: <TrackChangesOutlinedIcon fontSize="large" /> },
+              { title: 'Custom Roadmaps', desc: 'Personalized steps at 3, 6, 9 months to help you stay on track.', icon: <AltRouteOutlinedIcon fontSize="large" /> },
+              { title: 'Resources Hub', desc: 'Access videos, articles, and tools tailored to your journey.', icon: <MenuBookOutlinedIcon fontSize="large" /> }
             ].map((item, i) => (
               <Grid item xs={12} md={4} key={i}>
                 <Paper
-                  elevation={3}
+                  elevation={0}
                   sx={{
                     p: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyCOntent: 'center',
-                    height: '128px',
-                    width: '250px',
+                    width: '333px',
                     textAlign: 'center'
                   }}>
+                  <Box sx={{ mb: 2 }}>
+                    {item.icon}
+                  </Box>
                   <Typography variant="h6">{item.title}</Typography>
                   <Typography color="text.secondary">{item.desc}</Typography>
                 </Paper>
@@ -115,19 +122,20 @@ const HomePage = () => {
       </Box>
 
       {/* Call to Action */}
-      <Box sx={{ bgcolor: '#D9CAB3', py: 8, textAlign: 'center' }}>
+      <Box sx={{ bgcolor: 'primary.main', py: 8, textAlign: 'center' }}>
         <Container maxWidth="md">
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom color="white">
             Ready to define your path?
           </Typography>
-          <Typography variant="body1" color="text.secondary" paragraph>
+          <Typography variant="body1" color="text.secondary" color="white" paragraph>
             Get started today by sharing your goal and letting us build your personalized Golden Roadmap.
           </Typography>
           <Button
-            variant="contained"
+            variant="outlined"
             size="large"
             component={Link}
             to={isAuthenticated ? "/goals" : "/register"}
+            sx={{ borderColor: 'white', color: 'white' }}
           >
             Start Now</Button>
         </Container>
@@ -138,7 +146,8 @@ const HomePage = () => {
         <Typography variant="body2">© {new Date().getFullYear()} Golden Roadmap. All rights reserved.</Typography>
       </Box>
 
-    </div>
+      {/* </div> */}
+      </Box>
   );
 };
 

@@ -14,6 +14,7 @@ import UserProfilePage from './pages/UserProfilePage';
 import { UserProvider } from './contexts/UserContext';
 import RoadmapPage from './pages/RoadmapPage';
 import GeminiAIPage from './pages/GeminiAIPage';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const theme = createTheme({
   palette: {
@@ -35,6 +36,7 @@ const App = () => {
     return (
         <UserProvider> 
             <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <AuthProvider>
                     <Router>
                         <Navbar />
