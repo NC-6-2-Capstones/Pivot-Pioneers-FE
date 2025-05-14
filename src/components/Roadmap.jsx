@@ -1,19 +1,6 @@
 import React from 'react';
 import { Container, Paper, Typography, Box } from '@mui/material';
 
-// Mock user and roadmap data
-const user = {
-  name: 'Tetsu',
-};
-
-const roadmapGoals = [
-  { label: 'Start point', description: 'What to focus on now.' },
-  { label: 'First checkpoint', description: '3-month goal.' },
-  { label: 'Second checkpoint', description: '6-month goal.' },
-  { label: 'Third checkpoint', description: '9-month goal.' },
-  { label: 'End point', description: '1-year goal.' },
-];
-
 const checkpointPositions = [
   { cx: 60, cy: 220 },
   { cx: 160, cy: 120 },
@@ -22,11 +9,19 @@ const checkpointPositions = [
   { cx: 540, cy: 40 },
 ];
 
-const Roadmap = () => (
+const checkpointLabels = [
+  'Start',
+  '3 months',
+  '6 months',
+  '9 months',
+  '12 months',
+];
+
+const Roadmap = ({ userName, milestones, fullPlan }) => (
   <Container maxWidth="md" sx={{ mt: 8 }}>
     <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
       <Typography variant="h4" gutterBottom>
-        {user.name}'s Roadmap
+        {userName ? `${userName}'s Roadmap` : 'Roadmap'}
       </Typography>
       <Box sx={{ position: 'relative', width: 600, height: 260, mx: 'auto', my: 4 }}>
         {/* SVG Roadmap Path */}
@@ -50,7 +45,7 @@ const Roadmap = () => (
           ))}
         </svg>
         {/* Checkpoint Labels */}
-        {roadmapGoals.map((goal, idx) => (
+        {checkpointLabels.map((label, idx) => (
           <Box
             key={idx}
             sx={{
@@ -62,14 +57,22 @@ const Roadmap = () => (
             }}
           >
             <Typography variant="subtitle1" fontWeight="bold">
-              {idx + 1}. {goal.label}
+              {idx + 1}. {label}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {goal.description}
+              {milestones && milestones[label]}
             </Typography>
           </Box>
         ))}
       </Box>
+      {fullPlan && (
+        <Box sx={{ mt: 6, textAlign: 'left', maxWidth: 700, mx: 'auto' }}>
+          <Typography variant="h5" gutterBottom>Comprehensive Plan</Typography>
+          <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+            {fullPlan}
+          </Typography>
+        </Box>
+      )}
     </Paper>
   </Container>
 );

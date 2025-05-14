@@ -18,6 +18,8 @@ import { goalService } from '../services/apiService';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useUser } from '../contexts/UserContext';
+import { analyzeGoal } from '../services/geminiService';
+import { parseGeminiRoadmap } from '../services/parseGeminiRoadmap';
 // import AssessmentForm from '../components/AssessmentForm';
 // import { sendToGeminiAI } from '../services/geminiService'; 
 
@@ -31,6 +33,7 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
     const [assessment, setAssessment] = useState({});
     const [aiResponse, setAIResponse] = useState('');
     const [category, setCategory] = useState('');
+    const [loadingAI, setLoadingAI] = useState(false);
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -64,42 +67,41 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
             alert('Please describe your goal');
             return;
         }
-        
         if (!category) {
             alert('Please select a category');
             return;
         }
-    
         try {
+            setLoadingAI(true);
+            // Call Gemini API and parse response
+            const aiText = await analyzeGoal(goal, assessment);
+            const { milestones, fullPlan } = parseGeminiRoadmap(aiText);
             // Create title from first line or first few words
             const title = goal.split('\n')[0] || goal.substring(0, 50);
-            
-            console.log('Submitting goal with data:', { 
+            // Save the goal with milestones and full plan
+            const response = await goalService.createGoal({
                 title: title,
                 description: goal,
-                category: category
+                category: category,
+                milestone_start: milestones['Start'] || '',
+                milestone_3_months: milestones['3 months'] || '',
+                milestone_6_months: milestones['6 months'] || '',
+                milestone_9_months: milestones['9 months'] || '',
+                milestone_12_months: milestones['12 months'] || '',
+                full_plan: fullPlan || ''
             });
-            
-            // Save the goal with proper structure matching the backend model
-            const response = await goalService.createGoal({ 
-                title: title,
-                description: goal,
-                category: category
-            });
-            
-            console.log('Goal saved successfully:', response);
-
+ 
+            setLoadingAI(false);
             alert('Goal created successfully!');
-        
-            // Navigate to the user profile page and select the goals tab
-            navigate('/userProfile', { 
-                state: { 
+            navigate('/userProfile', {
+                state: {
+
                     activeTab: 2, // Goals tab
                     newGoal: true
                 }
             });
-            
         } catch (error) {
+            setLoadingAI(false);
             console.error('Error submitting goal:', error);
             alert('Something went wrong while submitting your goal. Please try again.');
         }
@@ -173,6 +175,7 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                                 <MenuItem value="personal">Personal</MenuItem>
                                 <MenuItem value="financial">Financial</MenuItem>
                                 <MenuItem value="health">Health</MenuItem>
+                                <MenuItem value="other">Other</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
@@ -182,8 +185,9 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
                             variant="contained"
                             color="primary"
                             onClick={handleSubmit}
+                            disabled={loadingAI}
                         >
-                            Submit Goal
+                            {loadingAI ? 'Generating Roadmap...' : 'Submit Goal'}
                         </Button>
                     </Box>
 
