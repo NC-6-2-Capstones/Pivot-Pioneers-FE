@@ -50,17 +50,8 @@ const Navbar = () => {
               to="/goals"
               sx={{ mr: 2 }}
             >
-              Golden❓
-            </Button>
-            <Button
-              color="inherit"
-              component={Link}
-              to="/ai"
-              sx={{ mr: 2 }}
-            >
-              AI Analyzer
-            </Button>
-            
+              Golden Question💬
+            </Button>            
             <Button
               color="inherit"
               component={Link}
