@@ -451,8 +451,8 @@ const UserProfilePage = () => {
                                     <>
                                         <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
                                             Completed Goals
-                                        </Typography>
-                                        <Grid container spacing={2}>
+                                        </Typography >
+                                        <Grid container spacing={2}> 
                                             {goals
                                                 .filter(goal => goal.is_completed)
                                                 .map(goal => (
