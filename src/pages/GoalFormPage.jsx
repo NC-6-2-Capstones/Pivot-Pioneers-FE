@@ -18,8 +18,7 @@ import { goalService } from '../services/apiService';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useUser } from '../contexts/UserContext';
-import { analyzeGoal } from '../services/geminiService';
-import { parseGeminiRoadmap } from '../services/parseGeminiRoadmap';
+// import { parseGeminiRoadmap } from '../services/parseGeminiRoadmap';
 // import AssessmentForm from '../components/AssessmentForm';
 // import { sendToGeminiAI } from '../services/geminiService'; 
 
@@ -73,37 +72,59 @@ const GoalFormPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
         }
         try {
             setLoadingAI(true);
-            // Call Gemini API and parse response
-            const aiText = await analyzeGoal(goal, assessment);
-            const { milestones, fullPlan } = parseGeminiRoadmap(aiText);
-            // Create title from first line or first few words
-            const title = goal.split('\n')[0] || goal.substring(0, 50);
-            // Save the goal with milestones and full plan
-            const response = await goalService.createGoal({
-                title: title,
-                description: goal,
-                category: category,
-                milestone_start: milestones['Start'] || '',
-                milestone_3_months: milestones['3 months'] || '',
-                milestone_6_months: milestones['6 months'] || '',
-                milestone_9_months: milestones['9 months'] || '',
-                milestone_12_months: milestones['12 months'] || '',
-                full_plan: fullPlan || ''
-            });
- 
-            setLoadingAI(false);
-            alert('Goal created successfully!');
-            navigate('/userProfile', {
-                state: {
 
-                    activeTab: 2, // Goals tab
-                    newGoal: true
-                }
+            // Step 1: Create the basic goal first
+            const title = goal.split('\n')[0] || goal.substring(0, 50);
+            const newGoalPayload = {
+                title: title,
+                description: goal, // Full goal text
+                category: category,
+            };
+            const createdGoalResponse = await goalService.createGoal(newGoalPayload);
+            const newGoalId = createdGoalResponse.data.id;
+
+            if (!newGoalId) {
+                setLoadingAI(false);
+                alert('Failed to create goal. Please try again.');
+                return;
+            }
+
+            // Step 2: Call backend to generate roadmap for the newly created goal
+            // The backend will now parse and save the roadmap details to this goal
+            const roadmapGenerationResponse = await goalService.generateRoadmap({
+                goal_id: newGoalId, // Pass the ID of the newly created goal
+                goal: goal,         // Full goal text for the prompt
+                category: category, // Category for the prompt
+                description: goal   // Full goal text as description for the prompt
             });
+            
+            setLoadingAI(false);
+
+            // The roadmapGenerationResponse.data should contain the updated goal with roadmap fields
+            if (roadmapGenerationResponse.data && roadmapGenerationResponse.data.id) {
+                alert('Goal and roadmap generated successfully!');
+                navigate('/userProfile', {
+                    state: {
+                        activeTab: 2, // Goals tab
+                        newGoal: true, // To potentially trigger a refresh or show a message
+                        goalId: newGoalId // Pass the new goal ID if needed by UserProfilePage
+                    }
+                });
+            } else {
+                // This case might occur if generateRoadmap doesn't return the full goal or an error occurred
+                console.error('Roadmap generation might have had an issue, or response format is unexpected:', roadmapGenerationResponse);
+                alert('Goal created, but there was an issue generating the full roadmap. You can try generating it again from your profile.');
+                navigate('/userProfile', { state: { activeTab: 2 } }); // Navigate anyway
+            }
+
         } catch (error) {
             setLoadingAI(false);
-            console.error('Error submitting goal:', error);
-            alert('Something went wrong while submitting your goal. Please try again.');
+            console.error('Error submitting goal or generating roadmap:', error);
+            if (error.response && error.response.data && error.response.data.detail) {
+                alert(`Error: ${error.response.data.detail}`);
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
         }
     };
 

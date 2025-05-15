@@ -43,7 +43,8 @@ export const goalService = {
   createGoal: (goalData) => api.post('/goals/', goalData),
   updateGoal: (id, goalData) => api.put(`/goals/${id}/`, goalData),
   deleteGoal: (id) => api.delete(`/goals/${id}/`),
-  getRoadmap: (id) => api.get(`/goals/${id}/roadmap/`)
+  getRoadmap: (id) => api.get(`/goals/${id}/roadmap/`),
+  generateRoadmap: (goalData) => api.post('/goals/generate-roadmap/', goalData)
 };
 
 // Profile service

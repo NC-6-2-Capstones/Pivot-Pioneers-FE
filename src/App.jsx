@@ -71,7 +71,7 @@ const App = () => {
                                 } 
                             />
                             <Route 
-                                path="/roadmap" 
+                                path="/goals/:goalId"
                                 element={
                                     <ProtectedRoute>
                                         <RoadmapPage />
