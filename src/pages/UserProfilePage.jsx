@@ -427,7 +427,7 @@ const UserProfilePage = () => {
                                                             <Button
                                                                 size="small"
                                                                 variant="outlined"
-                                                                onClick={() => navigate(`/roadmap/${goal.id}`)}
+                                                                onClick={() => navigate(`/goals/${goal.id}`)}
                                                             >
                                                                 Goal Roadmap
                                                             </Button>
@@ -476,7 +476,7 @@ const UserProfilePage = () => {
                                                                     <Button
                                                                         size="small"
                                                                         variant="outlined"
-                                                                        onClick={() => navigate(`/roadmap/${goal.id}`)}
+                                                                        onClick={() => navigate(`/goals/${goal.id}`)}
                                                                     >
                                                                         Goal Roadmap
                                                                     </Button>
