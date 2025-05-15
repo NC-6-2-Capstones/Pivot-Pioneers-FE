@@ -1,30 +1,74 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Roadmap from '../components/Roadmap';
-import { parseGeminiRoadmap } from '../services/parseGeminiRoadmap';
-
-// TODO: Replace this with actual Gemini API call
-const mockGeminiResponse = `Milestones:
-- Start: Define your vision and set clear, actionable objectives.
-- 3 months: Build foundational skills and establish consistent routines.
-- 6 months: Achieve intermediate milestones and expand your network.
-- 9 months: Tackle advanced challenges and refine your strategy.
-- 12 months: Reach your primary goal and reflect on your growth.
-
-Full Plan:
-To achieve your goal, begin by clarifying your vision and breaking it down into specific, measurable objectives. In the first three months, focus on building the necessary skills and creating habits that support your progress. By six months, you should be hitting key milestones and connecting with others who can support your journey. At nine months, address more complex challenges and adjust your approach as needed. By the end of the year, you will have reached your main goal and can look back on your progress to plan your next steps.`;
+import { goalService } from '../services/apiService';
+import { useAuth } from '../contexts/AuthContext';
+import { Container, CircularProgress, Alert, Typography } from '@mui/material';
 
 const RoadmapPage = () => {
-  const [milestones, setMilestones] = useState({});
-  const [fullPlan, setFullPlan] = useState('');
+  const { goalId } = useParams();
+  const { user } = useAuth();
+
+  const [goalData, setGoalData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    // Simulate fetching and parsing Gemini response
-    const { milestones, fullPlan } = parseGeminiRoadmap(mockGeminiResponse);
-    setMilestones(milestones);
-    setFullPlan(fullPlan);
-  }, []);
+    if (goalId) {
+      const fetchGoalRoadmap = async () => {
+        setLoading(true);
+        setError('');
+        try {
+          const response = await goalService.getGoal(goalId);
+          setGoalData(response.data);
+        } catch (err) {
+          console.error('Error fetching goal roadmap:', err);
+          setError(err.response?.data?.detail || err.message || 'Failed to load roadmap data.');
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchGoalRoadmap();
+    }
+  }, [goalId]);
 
-  return <Roadmap userName="Tetsu" milestones={milestones} fullPlan={fullPlan} />;
+  if (loading) {
+    return (
+      <Container sx={{ textAlign: 'center', mt: 4 }}>
+        <CircularProgress />
+        <Typography sx={{ mt: 2 }}>Loading roadmap...</Typography>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container sx={{ mt: 4 }}>
+        <Alert severity="error">{error}</Alert>
+      </Container>
+    );
+  }
+
+  if (!goalData) {
+    return (
+      <Container sx={{ mt: 4 }}>
+        <Alert severity="info">No roadmap data found for this goal.</Alert>
+      </Container>
+    );
+  }
+
+  const milestones = {
+    'Start': goalData.milestone_start || '',
+    '3 months': goalData.milestone_3_months || '',
+    '6 months': goalData.milestone_6_months || '',
+    '9 months': goalData.milestone_9_months || '',
+    '12 months': goalData.milestone_12_months || '',
+  };
+
+  const fullPlan = goalData.full_plan || '';
+  const userName = user?.username || 'User';
+
+  return <Roadmap userName={userName} milestones={milestones} fullPlan={fullPlan} goalTitle={goalData.title} />;
 };
 
 export default RoadmapPage; 
