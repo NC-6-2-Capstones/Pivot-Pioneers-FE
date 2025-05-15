@@ -39,7 +39,7 @@ const HomePage = () => {
           },
         }}
       >
-        <Container maxWidth="false" disableGutters>
+        <Container maxWidth="md" >
           <Typography variant="h2" gutterBottom>
             Welcome to the Golden Roadmap
           </Typography>

@@ -40,8 +40,7 @@ const App = () => {
                 <AuthProvider>
                     <Router>
                         <Navbar />
-                        <Routes>
-                            <Route path="/ai" element={<GeminiAIPage />} />     
+                        <Routes>     
                             <Route path="/dashboard" element={<DashboardPage />} />
                             <Route path="/" element={<HomePage />} />
                             <Route path="/login" element={<LoginPage />} />
