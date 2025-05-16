@@ -127,7 +127,7 @@ const HomePage = () => {
           <Typography variant="h4" gutterBottom color="white">
             Ready to define your path?
           </Typography>
-          <Typography variant="body1" color="text.secondary" color="white" paragraph>
+          <Typography variant="body1" color="text.secondary"  paragraph>
             Get started today by sharing your goal and letting us build your personalized Golden Roadmap.
           </Typography>
           <Button
