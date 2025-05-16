@@ -155,9 +155,9 @@ const MyGoals = () => {
                             />
                           </Box>
                           
-                          <Typography variant="body2" color="textSecondary" paragraph>
+                          {/* <Typography variant="body2" color="textSecondary" paragraph>
                             {goal.description}
-                          </Typography>
+                          </Typography> */}
                           
                           <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mt: 2 }}>
                             <Button
@@ -212,9 +212,9 @@ const MyGoals = () => {
                             />
                           </Box>
                           
-                          <Typography variant="body2" color="textSecondary" paragraph>
+                          {/* <Typography variant="body2" color="textSecondary" paragraph>
                             {goal.description}
-                          </Typography>
+                          </Typography> */}
                           
                           <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mt: 2 }}>
                             <Button
