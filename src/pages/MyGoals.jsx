@@ -81,7 +81,29 @@ const MyGoals = () => {
       </Container>
     );
   }
-
+  const handleToggleComplete = async (goal) => {
+    try {
+      // Toggle the completion status
+      const updatedGoal = {
+        ...goal,
+        is_completed: !goal.is_completed
+      };
+      
+      // Call the API to update the goal
+      await goalService.updateGoal(goal.id, updatedGoal);
+      
+      // Update the local state to reflect the change
+      setGoals(goals.map(g => 
+        g.id === goal.id ? updatedGoal : g
+      ));
+      
+      // Show confirmation message
+      alert(`Goal marked as ${updatedGoal.is_completed ? 'completed' : 'active'}`);
+    } catch (error) {
+      console.error('Error updating goal:', error);
+      alert('Failed to update goal status. Please try again.');
+    }
+  };
   const activeGoals = goals.filter(goal => !goal.is_completed);
   const completedGoals = goals.filter(goal => goal.is_completed);
 
@@ -144,7 +166,7 @@ const MyGoals = () => {
                       <Card variant="outlined">
                         <CardContent>
                           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                            <Box maxWidth="70%">
+                            <Box >
                               <Typography variant="h6" noWrap>{goal.title}</Typography>
                             </Box>
                             <Chip
@@ -165,7 +187,15 @@ const MyGoals = () => {
                               variant="outlined"
                               onClick={() => navigate(`/goals/${goal.id}`)}
                             >
-                              Goal Roadmap
+                               Roadmap
+                            </Button>
+                            <Button 
+                               size="small" 
+                               variant="outlined"
+                               color="success"
+                               onClick={() => handleToggleComplete(goal)}
+                            >
+                               Complete
                             </Button>
                             <Button 
                               size="small" 
@@ -222,7 +252,15 @@ const MyGoals = () => {
                               variant="outlined"
                               onClick={() => navigate(`/goals/${goal.id}`)}
                             >
-                              Goal Roadmap
+                               Roadmap
+                            </Button>
+                            <Button 
+                               size="small" 
+                               variant="outlined"
+                               color="primary"
+                               onClick={() => handleToggleComplete(goal)}
+                            >
+                               Active
                             </Button>
                             <Button 
                               size="small" 
