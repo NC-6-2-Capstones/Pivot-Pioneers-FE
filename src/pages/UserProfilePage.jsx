@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
     Container,
@@ -116,6 +116,26 @@ const UserProfilePage = () => {
   const [earnedPoints, setEarnedPoints] = useState(0);
   const [achievement, setAchievement] = useState(null);
   const [showAchievementNotification, setShowAchievementNotification] = useState(false);
+  
+  // New state to track achievements
+  const [userAchievements, setUserAchievements] = useState([]);
+  const [achievementsLoading, setAchievementsLoading] = useState(false);
+  const [refreshAchievementsTrigger, setRefreshAchievementsTrigger] = useState(0);
+
+  // Create a reusable function to fetch achievements
+  const fetchUserAchievements = useCallback(async () => {
+    setAchievementsLoading(true);
+    try {
+      console.log('Fetching user achievements...');
+      const achievementsData = await gamificationService.getUserAchievements();
+      console.log('Achievements data:', achievementsData);
+      setUserAchievements(achievementsData || []);
+    } catch (err) {
+      console.error('Error fetching achievements:', err);
+    } finally {
+      setAchievementsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     // Redirect if not authenticated
@@ -142,6 +162,9 @@ const UserProfilePage = () => {
         const pointsData = await gamificationService.getUserPoints();
         setUserPoints(pointsData.total_points);
         setUserLevel(pointsData.level);
+        
+        // Fetch user achievements
+        await fetchUserAchievements();
       } catch (err) {
         console.error('Error fetching user data:', err);
         if (err.response?.status === 404 && err.response?.data?.detail?.includes('personality profile')) {
@@ -156,7 +179,7 @@ const UserProfilePage = () => {
     };
 
     fetchUserData();
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, fetchUserAchievements]);
 
   // Re-fetch goals when navigating from goal creation
   useEffect(() => {
@@ -173,6 +196,20 @@ const UserProfilePage = () => {
       fetchGoals();
     }
   }, [newGoal]);
+  
+  // Refresh achievements whenever the tab changes to achievements tab
+  useEffect(() => {
+    if (activeTab === 3) {
+      fetchUserAchievements();
+    }
+  }, [activeTab, fetchUserAchievements]);
+  
+  // Refresh achievements when the refreshAchievementsTrigger changes
+  useEffect(() => {
+    if (refreshAchievementsTrigger > 0) {
+      fetchUserAchievements();
+    }
+  }, [refreshAchievementsTrigger, fetchUserAchievements]);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -211,12 +248,17 @@ const UserProfilePage = () => {
           
           // Check for new achievements
           const newAchievements = await gamificationService.checkNewAchievements();
+          console.log('New achievements:', newAchievements);
+          
           if (newAchievements && newAchievements.length > 0) {
             setAchievement(newAchievements[0]);
             // Show achievement notification after celebration dialog closes
             setTimeout(() => {
               setShowAchievementNotification(true);
             }, 1000);
+            
+            // Trigger a refresh of the achievements
+            setRefreshAchievementsTrigger(prev => prev + 1);
           }
         } catch (err) {
           console.error('Error with gamification:', err);
@@ -257,6 +299,13 @@ const UserProfilePage = () => {
         alert('Failed to delete goal. Please try again.');
       }
     }
+  };
+  
+  // Handle closing the achievement notification
+  const handleCloseAchievementNotification = () => {
+    setShowAchievementNotification(false);
+    // Refresh achievements list after closing the notification
+    setRefreshAchievementsTrigger(prev => prev + 1);
   };
 
   if (loading) {
@@ -378,6 +427,12 @@ const UserProfilePage = () => {
                         <ListItemText
                           primary="Experience Points"
                           secondary={`${userPoints} points (Level ${userLevel})`}
+                        />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText
+                          primary="Achievements"
+                          secondary={`${userAchievements.length} achievements unlocked`}
                         />
                       </ListItem>
                     </List>
@@ -621,7 +676,20 @@ const UserProfilePage = () => {
         
         {/* Achievements Tab */}
         {activeTab === 3 && (
-          <UserAchievements />
+          <Box>
+            {achievementsLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <UserAchievements 
+                achievements={userAchievements} 
+                onRefresh={fetchUserAchievements} 
+              />
+            )}
+            
+          
+          </Box>
         )}
       </Paper>
       
@@ -681,7 +749,7 @@ const UserProfilePage = () => {
       {/* Achievement notification */}
       <AchievementNotification 
         open={showAchievementNotification} 
-        onClose={() => setShowAchievementNotification(false)} 
+        onClose={handleCloseAchievementNotification} 
         achievement={achievement}
       />
     </Container>
