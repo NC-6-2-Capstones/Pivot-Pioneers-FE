@@ -91,13 +91,16 @@ const GoalAndGeminiPage = ({ goldenQuestion = 'What is your next big goal?' }) =
       </Container>
     );
   }
-
+  const capitalize = (name) => {
+    if (!name) return '';
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
   return (
     <Container maxWidth="md">
       <Box sx={{ mt: 8 }}>
         <Paper elevation={3} sx={{ p: 4 }}>
           <Typography variant="h5" align="center" gutterBottom>
-            Welcome {user?.firstName || user?.username || 'Friend'}
+            Welcome {user? capitalize(user.firstName || user.username) : 'Friend'}
           </Typography>
 
           <Typography align="center" sx={{ mb: 4 }}>
