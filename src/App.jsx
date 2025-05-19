@@ -15,6 +15,7 @@ import { UserProvider } from './contexts/UserContext';
 import RoadmapPage from './pages/RoadmapPage';
 import GeminiAIPage from './pages/GeminiAIPage';
 import CssBaseline from '@mui/material/CssBaseline';
+import MyGoals from './pages/MyGoals';
 
 const theme = createTheme({
   palette: {
@@ -40,8 +41,7 @@ const App = () => {
                 <AuthProvider>
                     <Router>
                         <Navbar />
-                        <Routes>
-                            <Route path="/ai" element={<GeminiAIPage />} />     
+                        <Routes>     
                             <Route path="/dashboard" element={<DashboardPage />} />
                             <Route path="/" element={<HomePage />} />
                             <Route path="/login" element={<LoginPage />} />
@@ -70,13 +70,22 @@ const App = () => {
                                     </ProtectedRoute>
                                 } 
                             />
+                            
                             <Route 
-                                path="/roadmap" 
+                                path="/goals/:goalId"
                                 element={
                                     <ProtectedRoute>
                                         <RoadmapPage />
                                     </ProtectedRoute>
                                 } 
+                            />
+                            <Route
+                                path="/mygoals"
+                                element={
+                                    <ProtectedRoute>
+                                        <MyGoals/>
+                                    </ProtectedRoute>
+                                }
                             />
                         </Routes>
                     </Router>

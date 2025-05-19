@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { analyzeGoal } from '../services/geminiService';
+import { goalService } from '../services/apiService';
 
 const GeminiAIPage = () => {
   const [goal, setGoal] = useState('');
@@ -10,10 +10,19 @@ const GeminiAIPage = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const result = await analyzeGoal(goal, assessment); 
-      setResult(result);
+      const aiResponse = await goalService.generateRoadmap({
+        goal,
+        category: '', // or add a category input if needed
+        description: goal
+      });
+      setResult(aiResponse.data.roadmap);
     } catch (error) {
       console.error('AI analysis error:', error);
+      if (error.response && error.response.data && error.response.data.detail) {
+        alert(error.response.data.detail);
+      } else {
+        alert('Something went wrong while generating your roadmap. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
