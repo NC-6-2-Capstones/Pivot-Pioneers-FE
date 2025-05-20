@@ -11,7 +11,7 @@ const gamificationService = {
    */
   getUserPoints: async () => {
     try {
-      const response = await api.get('/api/gamification/points/');
+      const response = await api.get('/gamification/points/');
       return response.data;
     } catch (error) {
       console.error('Error fetching user points:', error);
@@ -31,7 +31,7 @@ const gamificationService = {
    */
   getUserAchievements: async () => {
     try {
-      const response = await api.get('/api/gamification/achievements/');
+      const response = await api.get('/gamification/achievements/');
       return response.data;
     } catch (error) {
       console.error('Error fetching achievements:', error);
@@ -46,7 +46,7 @@ const gamificationService = {
    */
   addPointsForGoal: async (goalData) => {
     try {
-      const response = await api.post('/api/gamification/add-points/', {
+      const response = await api.post('/gamification/add-points/', {
         goal_id: goalData.id,
         category: goalData.category
       });
@@ -87,7 +87,7 @@ const gamificationService = {
    */
   checkNewAchievements: async () => {
     try {
-      const response = await api.get('/api/gamification/check-achievements/');
+      const response = await api.get('/gamification/check-achievements/');
       return response.data.new_achievements || [];
     } catch (error) {
       console.error('Error checking achievements:', error);
