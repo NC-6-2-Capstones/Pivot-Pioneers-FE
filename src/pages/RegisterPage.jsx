@@ -18,7 +18,7 @@ const RegisterPage = () => {
     // Redirect if already authenticated
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate('/');
+            navigate('/goals');
         }
     }, [isAuthenticated, navigate]);
 

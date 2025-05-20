@@ -13,7 +13,7 @@ const LoginPage = () => {
     // Redirect if already authenticated
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate('/userProfile'); // ✅ Redirect to dashboard instead of home
+            navigate('/goals'); // ✅ Redirect to dashboard instead of home
         }
     }, [isAuthenticated, navigate]);
 
@@ -25,7 +25,7 @@ const LoginPage = () => {
             if (user) {
                 setUser(user);
                 localStorage.setItem('user', JSON.stringify(user));
-                navigate('/dashboard');
+                navigate('/goals');
             }
         } catch (err) {
             console.error('Login failed:', err);
