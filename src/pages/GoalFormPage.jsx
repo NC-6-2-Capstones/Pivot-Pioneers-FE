@@ -10,7 +10,15 @@ import { goalService } from '../services/apiService';
 import { analyzeGoal } from '../services/geminiService';
 import { parseGeminiRoadmap } from '../services/parseGeminiRoadmap';
 
-const GoalAndGeminiPage = ({ goldenQuestion = 'What is your next big goal?' }) => {
+const GoalAndGeminiPage = ({ 
+  goldenQuestion = (
+    <>
+      It all starts with your <strong>Golden Question</strong> — your <em>why</em>.
+      <br />
+      What goal do you want to pursue?
+    </>
+  ),
+}) => {
   const { isAuthenticated } = useAuth();
   const { user } = useUser();
   const navigate = useNavigate();
@@ -108,7 +116,7 @@ const GoalAndGeminiPage = ({ goldenQuestion = 'What is your next big goal?' }) =
           </Typography>
 
           <TextField
-            label="Describe your goal"
+            label="Describe your goal and why it matters"
             multiline
             minRows={3}
             fullWidth

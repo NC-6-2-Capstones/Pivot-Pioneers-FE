@@ -50,7 +50,7 @@ const HomePage = () => {
           <Button
             variant="contained"
             size="large"
-            sx={{ mt: 3 }}
+            sx={{ mt: 3, color: 'white'}}
             component={Link}
             to={isAuthenticated ? "/goals" : "/register"}
           >
@@ -62,7 +62,7 @@ const HomePage = () => {
       {/* About Section */}
       <Box sx={{ py: 10 }}>
         <Container maxWidth="md">
-          <Typography variant="h4" align="center" gutterBottom><strong>About the Golden Roadmap</strong></Typography>
+          <Typography variant="h4" align="center" gutterBottom><strong>About The Golden Roadmap</strong></Typography>
           <Typography paragraph align="center">
             <strong><em>The Golden Roadmap</em></strong> is a transformational tool built for individuals rebuilding their lives after incarceration.<br></br>
             Whether you’re just starting over or taking your next big step, this app helps you move forward with clarity, confidence, and purpose.
@@ -170,11 +170,6 @@ const HomePage = () => {
           >
             Start Now</Button>
         </Container>
-      </Box>
-
-      {/* Footer */}
-      <Box sx={{ bgcolor: '#212121', py: 4, color: '#fff', textAlign: 'center' }}>
-        <Typography variant="body2">© {new Date().getFullYear()} Golden Roadmap. All rights reserved.</Typography>
       </Box>
 
       {/* </div> */}
