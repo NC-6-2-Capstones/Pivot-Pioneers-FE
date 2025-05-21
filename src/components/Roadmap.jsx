@@ -6,11 +6,17 @@ import { Typography, Box, Container, Card, Divider } from '@mui/material';
 const RoadmapWrapper = styled.div`
   margin: 50px auto;
   max-width: 1100px;
-  padding: 0 20px;
+  padding: 30px;
   font-family: 'Nunito', 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: #fafafa;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234caf50' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
   
   @media (max-width: 768px) {
-    padding: 0 15px;
+    padding: 20px 15px;
+    margin: 30px auto;
   }
 `;
 
@@ -84,7 +90,12 @@ const MilestoneDot = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: ${props => props.$isActive ? '0 0 15px rgba(212, 175, 55, 0.5)' : '0 3px 10px rgba(0, 0, 0, 0.15)'};
+  
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const MilestoneLabel = styled.div`
@@ -118,13 +129,26 @@ const MilestoneDesc = styled.div`
 const PhaseDetailCard = styled.div`
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 35px;
   margin-top: 60px;
   border-top: 6px solid #4caf50;
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #4caf50, #2e7d32);
+    border-radius: 12px 12px 0 0;
+  }
   
   @media (max-width: 768px) {
-    padding: 20px 15px;
+    padding: 25px 20px;
   }
 `;
 
@@ -154,8 +178,8 @@ const PhaseContent = styled.div`
   font-family: 'Nunito', 'Segoe UI', Roboto, sans-serif;
   
   .section {
-    margin-bottom: 25px;
-    padding-bottom: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #e0e0e0;
   }
   
@@ -164,11 +188,13 @@ const PhaseContent = styled.div`
     font-size: 1.2rem;
     color: #d4af37;
     margin-bottom: 15px;
+    margin-top: 25px;
     font-family: 'Montserrat', 'Segoe UI', Roboto, sans-serif;
     display: block;
-    padding: 8px 12px;
+    padding: 10px 15px;
     background: #e8f5e9;
     border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   }
   
   .category-label {
@@ -191,8 +217,8 @@ const PhaseContent = styled.div`
   }
   
   .item-block {
-    margin-bottom: 16px;
-    padding-bottom: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
     border-bottom: 1px dashed #e0e0e0;
   }
   
@@ -202,7 +228,7 @@ const PhaseContent = styled.div`
   
   .description {
     display: block;
-    margin-top: 6px;
+    margin-top: 8px;
     font-style: italic;
     color: #666;
   }
@@ -210,6 +236,18 @@ const PhaseContent = styled.div`
   p {
     margin-bottom: 16px;
     letter-spacing: 0.01em;
+  }
+  
+  /* Add spacing after list items */
+  li {
+    margin-bottom: 10px;
+  }
+  
+  /* Add spacing before and after lists */
+  ul, ol {
+    margin-top: 12px;
+    margin-bottom: 20px;
+    padding-left: 20px;
   }
   
   b, strong {
@@ -225,41 +263,46 @@ const PhaseContent = styled.div`
   .goal-section {
     background-color: #e8f5e9;
     border-left: 4px solid #4caf50;
-    padding-left: 15px;
+    padding: 15px;
     border-radius: 0 6px 6px 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 10px;
   }
   
   .action-section {
     background-color: #e8f5e9;
     border-left: 4px solid #2e7d32;
-    padding-left: 15px;
+    padding: 15px;
     border-radius: 0 6px 6px 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 10px;
   }
   
   .tools-section {
     background-color: #e8f5e9;
     border-left: 4px solid #388e3c;
-    padding-left: 15px;
+    padding: 15px;
     border-radius: 0 6px 6px 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 10px;
   }
   
   .habit-section {
     background-color: #f1f8e9;
     border-left: 4px solid #7cb342;
-    padding-left: 15px;
+    padding: 15px;
     border-radius: 0 6px 6px 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 10px;
   }
   
   .value-section {
     background-color: #e8f5e9;
     border-left: 4px solid #4caf50;
-    padding-left: 15px;
+    padding: 15px;
     border-radius: 0 6px 6px 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 10px;
   }
 `;
 
@@ -323,7 +366,7 @@ const Roadmap = ({ userName, milestones, fullPlan, assessmentTraits = {} }) => {
     change_response = '',
     goal_energy = ''
   } = assessmentTraits || {};
-
+  
   // More detailed phase-specific summaries
   const getPhaseDescriptions = () => {
     return {
@@ -503,12 +546,12 @@ const Roadmap = ({ userName, milestones, fullPlan, assessmentTraits = {} }) => {
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
       
       <RoadmapTitle>
-        {capitalizedName ? `${capitalizedName}'s Roadmap` : 'Roadmap'}
+          {capitalizedName ? `${capitalizedName}'s Roadmap` : 'Roadmap'}
       </RoadmapTitle>
-      
-      {Object.keys(assessmentTraits).length > 0 && (
+        
+        {Object.keys(assessmentTraits).length > 0 && (
         <PersonalizedIntro>
-          {getPersonalizedGuidance()}
+            {getPersonalizedGuidance()}
         </PersonalizedIntro>
       )}
       
@@ -519,8 +562,8 @@ const Roadmap = ({ userName, milestones, fullPlan, assessmentTraits = {} }) => {
             $isActive={activePhase > index}
             $width="22%"
             $left={`${index === 0 ? 8 : 9 + index * 22}%`}
-          />
-        ))}
+              />
+            ))}
         <MilestonesContainer>
           {checkpointLabels.map((label, idx) => (
             <Milestone 
@@ -542,24 +585,24 @@ const Roadmap = ({ userName, milestones, fullPlan, assessmentTraits = {} }) => {
           ))}
         </MilestonesContainer>
       </TimelineContainer>
-      
+        
       {fullPlan && phases.length > 0 && (
         <PhaseDetailCard>
           <PhaseTitle>
-            {getPhaseTitle()}
+              {getPhaseTitle()}
           </PhaseTitle>
-          
+            
           <PhaseSummary>
-            {getPhaseSummary()}
+              {getPhaseSummary()}
           </PhaseSummary>
-          
-          <Divider sx={{ my: 3 }} />
-          
+            
+            <Divider sx={{ my: 3 }} />
+            
           <PhaseContent dangerouslySetInnerHTML={{ 
             __html: getPhaseContent()
           }} />
         </PhaseDetailCard>
-      )}
+        )}
     </RoadmapWrapper>
   );
 };
