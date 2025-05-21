@@ -11,62 +11,70 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from '../assets/logo.png'
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
-  
+
   // Menu state for user dropdown
   const [anchorEl, setAnchorEl] = React.useState(null);
-  
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const handleLogout = () => {
     logout();
     handleClose();
     navigate('/login');
   };
-  
+
   return (
     <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
-            Golden Roadmap
+      <Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Link to="/">
+            <img src={Logo} alt="Logo" style={{ height: 40, marginRight: 10 }} />
           </Link>
-        </Typography>
-        
+          <Typography variant="h6" component="div">
+            <Link to="/" style={{ color: 'white', textDecoration: 'none', fontWeight: 'bold' }}>
+              The Golden Roadmap
+            </Link>
+          </Typography>
+        </Box>
+
         {isAuthenticated ? (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button
+              variant="outlined"
               color="inherit"
               component={Link}
               to="/goals"
-              sx={{ mr: 2 }}
+              sx={{ mr: 2, borderColor: 'white', color: 'white', fontWeight: 'bold' }}
             >
-              Golden Question💬
-            </Button>            
+              Start with Your Why
+            </Button>
             <Button
+              variant="outlined"
               color="inherit"
               component={Link}
               to="/mygoals"
-              sx={{ mr: 2 }}
+              sx={{ mr: 2, borderline: 'white', color: 'white', fontWeight: 'bold' }}
             >
               Goals
             </Button>
-            
+
             <IconButton
               size="large"
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle sx={{ color: '#ffde59' }} />
             </IconButton>
             <Menu
               id="menu-appbar"
