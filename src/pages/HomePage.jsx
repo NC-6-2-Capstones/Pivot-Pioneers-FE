@@ -42,7 +42,7 @@ const HomePage = () => {
       >
         <Container maxWidth="md" >
           <Typography variant="h2" gutterBottom>
-            Welcome to <br></br><strong>The Golden Roadmap</strong>
+            Welcome to  <br></br><strong>The Golden Roadmap</strong>
           </Typography>
           <Typography variant="h6" paragraph>
             A path to transformation, empowerment, and new beginnings for justice-impacted individuals ready to reclaim their future.
