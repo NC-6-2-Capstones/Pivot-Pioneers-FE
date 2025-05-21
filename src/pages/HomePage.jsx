@@ -6,6 +6,9 @@ import TrackChangesOutlinedIcon from '@mui/icons-material/TrackChangesOutlined';
 import AltRouteOutlinedIcon from '@mui/icons-material/AltRouteOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { Divider } from '@mui/material';
+import Logo from '../assets/logo_no_background.png';
+
 
 
 
@@ -13,7 +16,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 const HomePage = () => {
   const { isAuthenticated } = useAuth();
   return (
-    // <div>
+
     <Box sx={{ p: 0, m: 0 }}>
 
       {/* Hero Section with Background Image */}
@@ -41,6 +44,19 @@ const HomePage = () => {
         }}
       >
         <Container maxWidth="md" >
+          <Box sx={{ mb: 4 }}>
+            <img
+              src={Logo}
+              alt="Golden Roadmap Logo"
+              style={{
+                maxWidth: '200px',
+                width: '100%',
+                height: 'auto',
+                margin: '0 auto',
+                display: 'block',
+              }}
+            />
+          </Box>
           <Typography variant="h2" gutterBottom>
             Welcome to  <br></br><strong>The Golden Roadmap</strong>
           </Typography>
@@ -50,7 +66,7 @@ const HomePage = () => {
           <Button
             variant="contained"
             size="large"
-            sx={{ mt: 3, color: 'white'}}
+            sx={{ mt: 3, color: 'white' }}
             component={Link}
             to={isAuthenticated ? "/goals" : "/register"}
           >
@@ -120,35 +136,35 @@ const HomePage = () => {
       </Box>
 
       {/* Features Section */}
-     <Box sx={{ py: 10 }}>
-  <Container maxWidth="lg">
-    <Typography variant="h4" align="center" gutterBottom>
-      Features
-    </Typography>
-    <Grid container spacing={4} justifyContent="center" textAlign="center">
-      {[
-        'Justice-Informed Design',
-        'Progress You Can See',
-        'Motivation That Moves You',
-        'Clean, focused interface',
-      ].map((feature, i) => (
-        <Grid item xs={12} md={6} key={i}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              gap: 1,
-              textAlign: 'left',
-            }}>
-            <CheckCircleOutlineIcon color="primary" />
-            <Typography variant="subtitle1">{feature}</Typography>
-          </Box>
-        </Grid>
-      ))}
-    </Grid>
-  </Container>
-</Box>
+      <Box sx={{ py: 10 }}>
+        <Container maxWidth="lg">
+          <Typography variant="h4" align="center" gutterBottom>
+            Features
+          </Typography>
+          <Grid container spacing={4} justifyContent="center" textAlign="center">
+            {[
+              'Justice-Informed Design',
+              'Progress You Can See',
+              'Motivation That Moves You',
+              'Clean, focused interface',
+            ].map((feature, i) => (
+              <Grid item xs={12} md={6} key={i}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'flex-start',
+                    gap: 1,
+                    textAlign: 'left',
+                  }}>
+                  <CheckCircleOutlineIcon color="primary" />
+                  <Typography variant="subtitle1">{feature}</Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
 
       {/* Call to Action */}
       <Box sx={{ bgcolor: 'primary.main', py: 8, textAlign: 'center' }}>
@@ -171,8 +187,14 @@ const HomePage = () => {
             Start Now</Button>
         </Container>
       </Box>
-
-      {/* </div> */}
+      {/* White Divider */}
+      <Box
+        sx={{
+          borderTop: '2px solid white', // White line
+          width: '100%',
+          mx: 'auto',
+        }}
+      />
     </Box>
   );
 };
