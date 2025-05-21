@@ -16,6 +16,7 @@ import {
     List,
     ListItem,
     ListItemText,
+    ListItemIcon,
     Avatar,
     Tab,
     Tabs,
@@ -24,9 +25,12 @@ import {
     DialogContent
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
+import EmailIcon from '@mui/icons-material/Email';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import FlagIcon from '@mui/icons-material/Flag';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import StarIcon from '@mui/icons-material/Star';
 import Confetti from 'react-confetti';
 import { useAuth } from '../contexts/AuthContext';
 import { assessmentService, profileService, goalService } from '../services/apiService';
@@ -34,6 +38,8 @@ import gamificationService from '../services/gamificationService';
 import UserAchievements from '../components/UserAchievements';
 import UserLevelBadge from '../components/UserLevelBadge';
 import AchievementNotification from '../components/AchievementNotification';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
 
 // Map profile values to readable text and descriptions
 const profileLabels = {
@@ -363,83 +369,151 @@ const UserProfilePage = () => {
           <Tab icon={<EmojiEventsIcon />} label="ACHIEVEMENTS" />
         </Tabs>
 
-        {/* Profile Tab */}
+        {/* Profile Tab - UPDATED with horizontal layout */}
         {activeTab === 0 && (
           <Box>
             <Typography variant="h5" gutterBottom>
               Personal Information
             </Typography>
-
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <Card variant="outlined">
-                  <CardContent>
+            
+            <Card variant="outlined" sx={{ mb: 3 }}>
+              <CardContent>
+                <Grid container spacing={2}>
+                  {/* Left section - Account Details */}
+                  <Grid item xs={12} md={4}>
                     <Typography variant="h6" gutterBottom>
                       Account Details
                     </Typography>
+                    
                     <List>
                       <ListItem>
-                        <ListItemText primary="Username" secondary={user?.username || 'Not set'} />
+                        <ListItemIcon>
+                          <PersonIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText 
+                          primary="Username" 
+                          secondary={user?.username || 'Not set'} 
+                        />
                       </ListItem>
+                      
                       <ListItem>
-                        <ListItemText primary="Email" secondary={user?.email || 'Not set'} />
+                        <ListItemIcon>
+                          <EmailIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText 
+                          primary="Email" 
+                          secondary={user?.email || 'Not set'} 
+                        />
                       </ListItem>
                     </List>
-                  </CardContent>
-                </Card>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Card variant="outlined">
-                  <CardContent>
+                  </Grid>
+                  
+                  {/* Divider between sections */}
+                  <Grid item xs={12} md="auto">
+                    <Divider orientation="vertical" flexItem sx={{ height: '100%', display: { xs: 'none', md: 'block' } }} />
+                    <Divider sx={{ width: '100%', my: 2, display: { xs: 'block', md: 'none' } }} />
+                  </Grid>
+                  
+                  {/* Right section - Journey Status */}
+                  <Grid item xs={12} md={7} >
                     <Typography variant="h6" gutterBottom>
                       Journey Status
                     </Typography>
-                    <List>
-                      <ListItem>
-                        <ListItemText
-                          primary="Assessment"
-                          secondary={profile ? 'Completed' : 'Not yet taken'}
-                        />
-                        {!profile && (
-                          <Button
-                            variant="outlined"
-                            size="small"
-                            onClick={handleTakeAssessment}
-                          >
-                            Take Now
-                          </Button>
-                        )}
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary="Active Goals"
-                          secondary={`${goals.filter(g => !g.is_completed).length} goals in progress`}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary="Completed Goals"
-                          secondary={`${goals.filter(g => g.is_completed).length} goals completed`}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary="Experience Points"
-                          secondary={`${userPoints} points (Level ${userLevel})`}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary="Achievements"
-                          secondary={`${userAchievements.length} achievements unlocked`}
-                        />
-                      </ListItem>
-                    </List>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
+                    
+                    <Grid container spacing={2}>
+                      <Grid item xs={6} sm={4}>
+                        <Box sx={{ textAlign: 'center', p: 1 }}>
+                          <Box sx={{ mb: 1 }}>
+                            <AssessmentIcon color="primary" />
+                          </Box>
+                          <Typography variant="body2" color="text.secondary">
+                            Assessment
+                          </Typography>
+                          <Box sx={{ mt: 0.5 }}>
+                            <Chip 
+                              label={profile ? 'Completed' : 'Not taken'} 
+                              color={profile ? 'success' : 'warning'} 
+                              size="small" 
+                              variant="outlined"
+                            />
+                          </Box>
+                          {!profile && (
+                            <Button
+                              size="small"
+                              variant="text"
+                              color="primary"
+                              onClick={handleTakeAssessment}
+                              sx={{ mt: 1, fontSize: '0.75rem' }}
+                            >
+                              Take Now
+                            </Button>
+                          )}
+                        </Box>
+                      </Grid>
+                      
+                      <Grid item xs={6} sm={4}>
+                        <Box sx={{ textAlign: 'center', p: 1 }}>
+                          <Box sx={{ mb: 1 }}>
+                            <FlagIcon color="primary" />
+                          </Box>
+                          <Typography variant="body2" color="text.secondary">
+                            Active Goals
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 'bold', mt: 0.5 }}>
+                            {goals.filter(g => !g.is_completed).length}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      
+                      <Grid item xs={6} sm={4}>
+                        <Box sx={{ textAlign: 'center', p: 1 }}>
+                          <Box sx={{ mb: 1 }}>
+                            <CheckCircleIcon color="primary" />
+                          </Box>
+                          <Typography variant="body2" color="text.secondary">
+                            Completed
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 'bold', mt: 0.5 }}>
+                            {goals.filter(g => g.is_completed).length}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      
+                      <Grid item xs={6} sm={4}>
+                        <Box sx={{ textAlign: 'center', p: 1 }}>
+                          <Box sx={{ mb: 1 }}>
+                            <StarIcon color="primary" />
+                          </Box>
+                          <Typography variant="body2" color="text.secondary">
+                            Experience
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 'bold', mt: 0.5 }}>
+                            {userPoints} pts
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            Level {userLevel}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      
+                      <Grid item xs={6} sm={4}>
+                        <Box sx={{ textAlign: 'center', p: 1 }}>
+                          <Box sx={{ mb: 1 }}>
+                            <EmojiEventsIcon color="primary" />
+                          </Box>
+                          <Typography variant="body2" color="text.secondary">
+                            Achievements
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 'bold', mt: 0.5 }}>
+                            {userAchievements.length}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
           </Box>
         )}
 
@@ -687,8 +761,6 @@ const UserProfilePage = () => {
                 onRefresh={fetchUserAchievements} 
               />
             )}
-            
-          
           </Box>
         )}
       </Paper>
