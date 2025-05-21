@@ -84,13 +84,13 @@ const GoalAndGeminiPage = ({ goldenQuestion = 'What is your next big goal?' }) =
     setSnackbarOpen(false);
   };
 
-  if (!user) {
-    return (
-      <Container maxWidth="sm" sx={{ py: 4 }}>
-        <Typography variant="h6">Loading your profile...</Typography>
-      </Container>
-    );
-  }
+  // if (!user) {
+  //   return (
+  //     <Container maxWidth="sm" sx={{ py: 4 }}>
+  //       <Typography variant="h6">Loading your profile...</Typography>
+  //     </Container>
+  //   );
+  // }
   const capitalize = (name) => {
     if (!name) return '';
     return name.charAt(0).toUpperCase() + name.slice(1);
