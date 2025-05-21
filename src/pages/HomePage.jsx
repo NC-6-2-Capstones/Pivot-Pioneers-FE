@@ -172,11 +172,6 @@ const HomePage = () => {
         </Container>
       </Box>
 
-      {/* Footer */}
-      <Box sx={{ bgcolor: '#212121', py: 4, color: '#fff', textAlign: 'center' }}>
-        <Typography variant="body2">© {new Date().getFullYear()} Golden Roadmap. All rights reserved.</Typography>
-      </Box>
-
       {/* </div> */}
     </Box>
   );
