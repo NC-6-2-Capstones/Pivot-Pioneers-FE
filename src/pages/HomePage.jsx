@@ -6,7 +6,6 @@ import TrackChangesOutlinedIcon from '@mui/icons-material/TrackChangesOutlined';
 import AltRouteOutlinedIcon from '@mui/icons-material/AltRouteOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { Divider } from '@mui/material';
 import Logo from '../assets/logo_no_background.png';
 
 
